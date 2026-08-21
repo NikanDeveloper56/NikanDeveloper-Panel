@@ -61,7 +61,7 @@ RUN rm -f /etc/fail2ban/jail.d/alpine-ssh.conf \
 RUN chmod +x \
   /app/DockerEntrypoint.sh \
   /app/nikan-developer \
-  /usr/bin/x-ui
+  /usr/bin/nikan-developer
 
 ENV XUI_IN_DOCKER="true"
 ENV XUI_MAIN_FOLDER="/app"
@@ -69,6 +69,5 @@ ENV XUI_ENABLE_FAIL2BAN="true"
 ENV XUI_DB_TYPE=""
 ENV XUI_DB_DSN=""
 EXPOSE 8080
-VOLUME [ "/etc/nikan-developer" ]
 CMD [ "./nikan-developer" ]
 ENTRYPOINT [ "/app/DockerEntrypoint.sh" ]
