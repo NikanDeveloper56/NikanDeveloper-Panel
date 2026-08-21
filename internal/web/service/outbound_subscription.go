@@ -13,13 +13,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/link"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/netsafe"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/common"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/link"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/netsafe"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray"
 )
 
 // filterOutboundsRejectedByCore drops outbounds the vendored xray-core config
@@ -363,7 +363,7 @@ func (s *OutboundSubscriptionService) fetchAndStore(sub *model.OutboundSubscript
 		s.recordError(sub, err)
 		return nil, err
 	}
-	req.Header.Set("User-Agent", "3x-ui-outbound-sub/1.0")
+	req.Header.Set("User-Agent", "Nikan.Developer-outbound-sub/1.0")
 
 	resp, err := client.Do(req)
 	if err != nil {

@@ -1,4 +1,4 @@
-// Pure builders for 3x-ui install commands (script + Docker). No React/DOM.
+// Pure builders for Nikan.Developer install commands (script + Docker). No React/DOM.
 
 export type InstallMethod = 'script' | 'docker';
 
@@ -11,8 +11,8 @@ export interface InstallOptions {
   webBasePath: string;
 }
 
-const REPO_RAW = 'https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh';
-const IMAGE = 'ghcr.io/mhsanaei/3x-ui:latest';
+const REPO_RAW = 'https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh';
+const IMAGE = 'ghcr.io/nikandeveloper56/Nikan.Developer:latest';
 
 function isLatest(version: string): boolean {
   const v = version.trim().toLowerCase();
@@ -35,15 +35,15 @@ export function buildScriptCommand(options: InstallOptions): string {
 export function buildDockerRun(options: InstallOptions): string {
   const lines = ['docker run -itd'];
   lines.push(`  -e XRAY_VMESS_AEAD_FORCED=false`);
-  lines.push(`  -e XUI_ENABLE_FAIL2BAN=${options.enableFail2ban ? 'true' : 'false'}`);
-  if (options.panelPort.trim()) lines.push(`  -e XUI_PORT=${options.panelPort.trim()}`);
+  lines.push(`  -e NikanDeveloper_ENABLE_FAIL2BAN=${options.enableFail2ban ? 'true' : 'false'}`);
+  if (options.panelPort.trim()) lines.push(`  -e NikanDeveloper_PORT=${options.panelPort.trim()}`);
   if (options.webBasePath.trim())
-    lines.push(`  -e XUI_INIT_WEB_BASE_PATH=${options.webBasePath.trim()}`);
-  lines.push(`  -v $PWD/db/:/etc/x-ui/`);
+    lines.push(`  -e NikanDeveloper_INIT_WEB_BASE_PATH=${options.webBasePath.trim()}`);
+  lines.push(`  -v $PWD/db/:/etc/nikan-developer/`);
   lines.push(`  -v $PWD/cert/:/root/cert/`);
   lines.push(`  --network=host`);
   lines.push(`  --restart=unless-stopped`);
-  lines.push(`  --name 3x-ui`);
+  lines.push(`  --name Nikan.Developer`);
   lines.push(`  ${IMAGE}`);
   return lines.join(' \\\n');
 }
@@ -52,19 +52,19 @@ export function buildDockerRun(options: InstallOptions): string {
 export function buildDockerCompose(options: InstallOptions): string {
   const env: string[] = [
     `      XRAY_VMESS_AEAD_FORCED: 'false'`,
-    `      XUI_ENABLE_FAIL2BAN: '${options.enableFail2ban ? 'true' : 'false'}'`,
+    `      NikanDeveloper_ENABLE_FAIL2BAN: '${options.enableFail2ban ? 'true' : 'false'}'`,
   ];
-  if (options.panelPort.trim()) env.push(`      XUI_PORT: '${options.panelPort.trim()}'`);
+  if (options.panelPort.trim()) env.push(`      NikanDeveloper_PORT: '${options.panelPort.trim()}'`);
   if (options.webBasePath.trim())
-    env.push(`      XUI_INIT_WEB_BASE_PATH: '${options.webBasePath.trim()}'`);
+    env.push(`      NikanDeveloper_INIT_WEB_BASE_PATH: '${options.webBasePath.trim()}'`);
 
   return [
     `services:`,
-    `  3x-ui:`,
+    `  Nikan.Developer:`,
     `    image: ${IMAGE}`,
-    `    container_name: 3x-ui`,
+    `    container_name: Nikan.Developer`,
     `    volumes:`,
-    `      - ./db/:/etc/x-ui/`,
+    `      - ./db/:/etc/nikan-developer/`,
     `      - ./cert/:/root/cert/`,
     `    environment:`,
     ...env,

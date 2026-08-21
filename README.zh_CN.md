@@ -2,23 +2,23 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./media/3x-ui-dark.png">
-    <img alt="3x-ui" src="./media/3x-ui-light.png">
+    <source media="(prefers-color-scheme: dark)" srcset="./media/Nikan.Developer-dark.png">
+    <img alt="Nikan.Developer" src="./media/Nikan.Developer-light.png">
   </picture>
 </p>
 
 <p align="center">
-  <a href="https://github.com/MHSanaei/3x-ui/releases"><img src="https://img.shields.io/github/v/release/mhsanaei/3x-ui" alt="Release"></a>
-  <a href="https://github.com/MHSanaei/3x-ui/actions"><img src="https://img.shields.io/github/actions/workflow/status/mhsanaei/3x-ui/release.yml.svg" alt="Build"></a>
-  <a href="#"><img src="https://img.shields.io/github/go-mod/go-version/mhsanaei/3x-ui.svg" alt="GO Version"></a>
-  <a href="https://github.com/MHSanaei/3x-ui/releases/latest"><img src="https://img.shields.io/github/downloads/mhsanaei/3x-ui/total.svg" alt="Downloads"></a>
+  <a href="https://github.com/NikanDeveloper56/Nikan.Developer/releases"><img src="https://img.shields.io/github/v/release/nikandeveloper56/Nikan.Developer" alt="Release"></a>
+  <a href="https://github.com/NikanDeveloper56/Nikan.Developer/actions"><img src="https://img.shields.io/github/actions/workflow/status/nikandeveloper56/Nikan.Developer/release.yml.svg" alt="Build"></a>
+  <a href="#"><img src="https://img.shields.io/github/go-mod/go-version/nikandeveloper56/Nikan.Developer.svg" alt="GO Version"></a>
+  <a href="https://github.com/NikanDeveloper56/Nikan.Developer/releases/latest"><img src="https://img.shields.io/github/downloads/nikandeveloper56/Nikan.Developer/total.svg" alt="Downloads"></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL%20V3-blue.svg?longCache=true" alt="License"></a>
-  <a href="https://pkg.go.dev/github.com/mhsanaei/3x-ui/v3"><img src="https://pkg.go.dev/badge/github.com/mhsanaei/3x-ui/v3.svg" alt="Go Reference"></a>
+  <a href="https://pkg.go.dev/github.com/nikandeveloper56/Nikan.Developer/v3"><img src="https://pkg.go.dev/badge/github.com/nikandeveloper56/Nikan.Developer/v3.svg" alt="Go Reference"></a>
 </p>
 
-**3X-UI** 是一个先进的开源 Web 控制面板，用于管理 [Xray-core](https://github.com/XTLS/Xray-core) 服务器。它提供简洁、多语言的界面，用于部署、配置和监控各种代理与 VPN 协议——从单台 VPS 到多节点部署。
+**Nikan.Developer** 是一个先进的开源 Web 控制面板，用于管理 [Xray-core](https://github.com/XTLS/Xray-core) 服务器。它提供简洁、多语言的界面，用于部署、配置和监控各种代理与 VPN 协议——从单台 VPS 到多节点部署。
 
-3X-UI 作为原始 X-UI 项目的增强分支（fork），增加了更广泛的协议支持、更好的稳定性、按客户端的流量统计以及许多提升使用体验的功能。
+Nikan.Developer 作为原始 Nikan.Developer 项目的增强分支（fork），增加了更广泛的协议支持、更好的稳定性、按客户端的流量统计以及许多提升使用体验的功能。
 
 > [!IMPORTANT]
 > 本项目仅供个人使用。请勿将其用于非法目的，也请勿在生产环境中使用。
@@ -69,31 +69,31 @@
 ## 快速开始
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh)
 ```
 
 若要安装特定版本，请在命令后附加对应的标签（例如 `v3.4.0`）：
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v3.4.0
+bash <(curl -Ls https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh) v3.4.0
 ```
 
 若要安装滚动更新的 **dev** 版本（来自 `main` 的最新逐次提交预发布版本，而非稳定版本），请传入 `dev-latest`：
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) dev-latest
+bash <(curl -Ls https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh) dev-latest
 ```
 
-安装过程中会生成随机的用户名、密码和访问路径。安装完成后，运行 `x-ui` 打开管理菜单，您可以在其中启动/停止服务、查看或重置登录凭据、管理 SSL 证书等。
+安装过程中会生成随机的用户名、密码和访问路径。安装完成后，运行 `nikan-developer` 打开管理菜单，您可以在其中启动/停止服务、查看或重置登录凭据、管理 SSL 证书等。
 
-完整文档请参阅 [项目Wiki](https://github.com/MHSanaei/3x-ui/wiki)。
+完整文档请参阅 [项目Wiki](https://github.com/NikanDeveloper56/Nikan.Developer/wiki)。
 
 ### 无人值守安装
 
 安装程序也可以**非交互式**运行，适用于 cloud-init。
-设置 `XUI_NONINTERACTIVE=1`（或在无 TTY 的情况下通过管道传入），它就会全程
+设置 `NikanDeveloper_NONINTERACTIVE=1`（或在无 TTY 的情况下通过管道传入），它就会全程
 零提示地完成端到端安装，生成随机凭据并写入
-`/etc/x-ui/install-result.env`。请参阅 [`deploy/`](deploy/)：
+`/etc/nikan-developer/install-result.env`。请参阅 [`deploy/`](deploy/)：
 
 - [Cloud-init user-data](deploy/cloud-init/) — 在任意云平台上无人值守安装（Hetzner/AWS/DO/Vultr/GCP/Azure/Oracle）
 - [Hetzner Cloud 说明](deploy/marketplace/hetzner/) — 在 Hetzner 上基于 cloud-init 的部署
@@ -106,31 +106,31 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## 数据库选项
 
-3X-UI 支持两种后端，可在安装时选择：
+Nikan.Developer 支持两种后端，可在安装时选择：
 
-- **SQLite**（默认）— 位于 `/etc/x-ui/x-ui.db` 的单个文件。无需配置，适合中小型部署。
+- **SQLite**（默认）— 位于 `/etc/nikan-developer/nikan-developer.db` 的单个文件。无需配置，适合中小型部署。
 - **PostgreSQL** — 推荐用于大量客户端或多节点设置。安装程序可以为您在本地安装 PostgreSQL，或接受指向现有服务器的 DSN。
 
-运行时通过环境变量选择后端（安装程序会为您写入 `/etc/default/x-ui`）：
+运行时通过环境变量选择后端（安装程序会为您写入 `/etc/default/nikan-developer`）：
 
 ```
-XUI_DB_TYPE=postgres
-XUI_DB_DSN=postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable
+NikanDeveloper_DB_TYPE=postgres
+NikanDeveloper_DB_DSN=postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable
 ```
 
 ### 将现有的 SQLite 安装迁移到 PostgreSQL
 
 ```bash
-x-ui migrate-db --dsn "postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable"
-# 然后在 /etc/default/x-ui 中设置 XUI_DB_TYPE 和 XUI_DB_DSN 并重启：
-systemctl restart x-ui
+nikan-developer migrate-db --dsn "postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable"
+# 然后在 /etc/default/nikan-developer 中设置 NikanDeveloper_DB_TYPE 和 NikanDeveloper_DB_DSN 并重启：
+systemctl restart nikan-developer
 ```
 
 源 SQLite 文件保持不变；在确认新后端正常工作后，请手动删除它。
 
 ### Docker
 
-默认的 `docker compose up -d` 仍使用 SQLite。若要使用捆绑的 PostgreSQL 服务运行，请取消注释 `docker-compose.yml` 中的两行 `XUI_DB_*` 环境变量，并使用该 profile 启动：
+默认的 `docker compose up -d` 仍使用 SQLite。若要使用捆绑的 PostgreSQL 服务运行，请取消注释 `docker-compose.yml` 中的两行 `NikanDeveloper_DB_*` 环境变量，并使用该 profile 启动：
 
 ```bash
 docker compose --profile postgres up -d
@@ -139,29 +139,29 @@ docker compose --profile postgres up -d
 该镜像捆绑了 Fail2ban（默认启用），用于强制执行按客户端的 **IP 限制**。Fail2ban 使用 `iptables` 封禁违规者，这需要 `NET_ADMIN` 权限。`docker-compose.yml` 已通过 `cap_add` 授予该权限；如果您改用 `docker run` 启动容器，请自行添加这些权限，否则封禁只会被记录而永远不会生效：
 
 ```bash
-docker run -d --cap-add=NET_ADMIN --cap-add=NET_RAW ... ghcr.io/mhsanaei/3x-ui
+docker run -d --cap-add=NET_ADMIN --cap-add=NET_RAW ... ghcr.io/nikandeveloper56/Nikan.Developer
 ```
 
 ## 环境变量
 
 | 变量 | 说明 | 默认值 |
 | --- | --- | --- |
-| `XUI_DB_TYPE` | 数据库后端：`sqlite` 或 `postgres` | `sqlite` |
-| `XUI_DB_DSN` | PostgreSQL 连接字符串（当 `XUI_DB_TYPE=postgres` 时） | — |
-| `XUI_DB_FOLDER` | SQLite 数据库文件所在目录 | `/etc/x-ui` |
-| `XUI_DB_MAX_OPEN_CONNS` | 最大打开连接数（PostgreSQL 连接池） | — |
-| `XUI_DB_MAX_IDLE_CONNS` | 最大空闲连接数（PostgreSQL 连接池） | — |
-| `XUI_INIT_WEB_BASE_PATH` | Web 面板的初始 URI 路径 | `/` |
-| `XUI_ENABLE_FAIL2BAN` | 启用基于 Fail2ban 的 IP 限制 | `true` |
-| `XUI_LOG_LEVEL` | 日志级别（`debug`、`info`、`warning`、`error`） | `info` |
-| `XUI_DEBUG` | 启用调试模式 | `false` |
-| `XUI_TUNNEL_HEALTH_MONITOR` | 启用隧道健康监控（探测某个 URL，在连续多次失败后重启 xray；重启会断开所有客户端） | `false` |
-| `XUI_TUNNEL_HEALTH_PROXY` | 探测请求所经过的代理；将其指向本地 xray 入站，使探测能够测试隧道（例如 `socks5://127.0.0.1:1080`）。留空表示探测仅检查主机连通性 | — |
-| `XUI_TUNNEL_HEALTH_URL` | 用于检测隧道健康状况的探测 URL | `https://www.cloudflare.com/cdn-cgi/trace` |
-| `XUI_TUNNEL_HEALTH_INTERVAL` | 两次探测之间的间隔 | `30s` |
-| `XUI_TUNNEL_HEALTH_TIMEOUT` | 单次探测的超时时间 | `10s` |
-| `XUI_TUNNEL_HEALTH_FAILURES` | 触发重启前的连续失败次数 | `3` |
-| `XUI_TUNNEL_HEALTH_COOLDOWN` | 两次连续重启之间的最小间隔 | `5m` |
+| `NikanDeveloper_DB_TYPE` | 数据库后端：`sqlite` 或 `postgres` | `sqlite` |
+| `NikanDeveloper_DB_DSN` | PostgreSQL 连接字符串（当 `NikanDeveloper_DB_TYPE=postgres` 时） | — |
+| `NikanDeveloper_DB_FOLDER` | SQLite 数据库文件所在目录 | `/etc/nikan-developer` |
+| `NikanDeveloper_DB_MAX_OPEN_CONNS` | 最大打开连接数（PostgreSQL 连接池） | — |
+| `NikanDeveloper_DB_MAX_IDLE_CONNS` | 最大空闲连接数（PostgreSQL 连接池） | — |
+| `NikanDeveloper_INIT_WEB_BASE_PATH` | Web 面板的初始 URI 路径 | `/` |
+| `NikanDeveloper_ENABLE_FAIL2BAN` | 启用基于 Fail2ban 的 IP 限制 | `true` |
+| `NikanDeveloper_LOG_LEVEL` | 日志级别（`debug`、`info`、`warning`、`error`） | `info` |
+| `NikanDeveloper_DEBUG` | 启用调试模式 | `false` |
+| `NikanDeveloper_TUNNEL_HEALTH_MONITOR` | 启用隧道健康监控（探测某个 URL，在连续多次失败后重启 xray；重启会断开所有客户端） | `false` |
+| `NikanDeveloper_TUNNEL_HEALTH_PROXY` | 探测请求所经过的代理；将其指向本地 xray 入站，使探测能够测试隧道（例如 `socks5://127.0.0.1:1080`）。留空表示探测仅检查主机连通性 | — |
+| `NikanDeveloper_TUNNEL_HEALTH_URL` | 用于检测隧道健康状况的探测 URL | `https://www.cloudflare.com/cdn-cgi/trace` |
+| `NikanDeveloper_TUNNEL_HEALTH_INTERVAL` | 两次探测之间的间隔 | `30s` |
+| `NikanDeveloper_TUNNEL_HEALTH_TIMEOUT` | 单次探测的超时时间 | `10s` |
+| `NikanDeveloper_TUNNEL_HEALTH_FAILURES` | 触发重启前的连续失败次数 | `3` |
+| `NikanDeveloper_TUNNEL_HEALTH_COOLDOWN` | 两次连续重启之间的最小间隔 | `5m` |
 
 ## 支持的语言
 
@@ -184,15 +184,15 @@ English · فارسی · العربية · 中文（简体） · 中文（繁體
 
 ## 社区工具
 
-社区围绕 3x-ui 构建的工具和集成。
+社区围绕 Nikan.Developer 构建的工具和集成。
 
-- [terraform-provider-3x-ui](https://github.com/batonogov/terraform-provider-threexui) (许可证: **MIT**): _使用 Terraform / OpenTofu 通过代码管理入站、客户端、面板设置和 Xray 配置。_
+- [terraform-provider-Nikan.Developer](https://github.com/batonogov/terraform-provider-threexui) (许可证: **MIT**): _使用 Terraform / OpenTofu 通过代码管理入站、客户端、面板设置和 Xray 配置。_
 
 ## 支持项目
 
 **如果这个项目对您有帮助，您可以给它一个**:star2:
 
-<a href="https://www.buymeacoffee.com/MHSanaei" target="_blank">
+<a href="https://www.buymeacoffee.com/NikanDeveloper56" target="_blank">
 <img src="./media/default-yellow.png" alt="Buy Me A Coffee" style="height: 70px !important;width: 277px !important;" >
 </a>
 
@@ -203,4 +203,4 @@ English · فارسی · العربية · 中文（简体） · 中文（繁體
 
 ## 随时间变化的星标数
 
-[![Stargazers over time](https://starchart.cc/MHSanaei/3x-ui.svg?variant=adaptive)](https://starchart.cc/MHSanaei/3x-ui)
+[![Stargazers over time](https://starchart.cc/NikanDeveloper56/Nikan.Developer.svg?variant=adaptive)](https://starchart.cc/NikanDeveloper56/Nikan.Developer)

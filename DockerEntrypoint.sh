@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Start fail2ban with the 3x-ipl jail
-if [ "$XUI_ENABLE_FAIL2BAN" = "true" ]; then
-    LOG_FOLDER="${XUI_LOG_FOLDER:-/var/log/x-ui}"
+if [ "$NikanDeveloper_ENABLE_FAIL2BAN" = "true" ]; then
+    LOG_FOLDER="${NikanDeveloper_LOG_FOLDER:-/var/log/nikan-developer}"
     mkdir -p "$LOG_FOLDER"
     touch "$LOG_FOLDER/3xipl.log" "$LOG_FOLDER/3xipl-banned.log"
 
@@ -33,7 +33,7 @@ EOF
     # added later without regenerating these files.
     SSH_PORTS=$(grep -oE '^[[:space:]]*Port[[:space:]]+[0-9]+' /etc/ssh/sshd_config 2>/dev/null | grep -oE '[0-9]+' | paste -sd, -)
     [ -z "$SSH_PORTS" ] && SSH_PORTS="22"
-    PANEL_PORT=$(/app/x-ui setting -show true 2>/dev/null | grep -Eo 'port: .+' | awk '{print $2}')
+    PANEL_PORT=$(/app/nikan-developer setting -show true 2>/dev/null | grep -Eo 'port: .+' | awk '{print $2}')
     EXEMPT_PORTS="$SSH_PORTS"
     [ -n "$PANEL_PORT" ] && EXEMPT_PORTS="$EXEMPT_PORTS,$PANEL_PORT"
 
@@ -78,5 +78,5 @@ if [ -f /root/.acme.sh/acme.sh ]; then
     crond
 fi
 
-# Run x-ui
-exec /app/x-ui
+# Run nikan-developer
+exec /app/nikan-developer

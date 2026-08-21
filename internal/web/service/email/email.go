@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
 )
 
 // EmailService sends email notifications via SMTP.
@@ -197,7 +197,7 @@ func (s *EmailService) TestConnection() SMTPTestResult {
 
 	msg := buildMessage(from, fromName, recipients, "[Nikan.Developer] Test email",
 		`<html><body style="font-family:monospace;font-size:14px">
-<h2>Test email from 3x-ui</h2>
+<h2>Test email from Nikan.Developer</h2>
 <p>If you received this, SMTP is configured correctly.</p>
 </body></html>`)
 
@@ -315,7 +315,7 @@ func (s *EmailService) SendTest() error {
 	return s.Send(
 		"[Nikan.Developer] Test email",
 		`<html><body style="font-family:monospace;font-size:14px">
-<h2>Test email from 3x-ui</h2>
+<h2>Test email from Nikan.Developer</h2>
 <p>If you received this, SMTP is configured correctly.</p>
 </body></html>`,
 	)

@@ -3,11 +3,11 @@ package service
 import (
 	"context"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/mtproto"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/mtproto"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray"
 )
 
 // DesiredMtprotoInstances derives the mtg sidecar configs this panel should be

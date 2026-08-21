@@ -1,17 +1,17 @@
 #cloud-config
 # ---------------------------------------------------------------------------
-# Generic 3x-ui unattended install via cloud-init user-data.
+# Generic Nikan.Developer unattended install via cloud-init user-data.
 #
 # Works on any cloud-init platform: Hetzner, AWS, DigitalOcean, Vultr, GCP,
 # Azure, Oracle. Paste the whole file as the instance "user data".
 #
-# It installs the latest 3x-ui release NON-INTERACTIVELY, generating unique
+# It installs the latest Nikan.Developer release NON-INTERACTIVELY, generating unique
 # random credentials per instance. Full credentials are surfaced ONLY on the
 # serial console (owner-only); /etc/motd (world-readable) shows just the access
 # URL + username. Nothing is baked in advance — every instance is unique.
 #
-# Requires the non-interactive install.sh (3x-ui with XUI_NONINTERACTIVE support).
-# Edit the exported XUI_* knobs in /opt/xui-bootstrap.sh below to customise.
+# Requires the non-interactive install.sh (Nikan.Developer with NikanDeveloper_NONINTERACTIVE support).
+# Edit the exported NikanDeveloper_* knobs in /opt/xui-bootstrap.sh below to customise.
 # ---------------------------------------------------------------------------
 
 package_update: true
@@ -27,46 +27,46 @@ write_files:
       export DEBIAN_FRONTEND=noninteractive
 
       # --- Non-interactive install knobs --------------------------------------
-      export XUI_NONINTERACTIVE=1
+      export NikanDeveloper_NONINTERACTIVE=1
       # SSL mode: none (plain HTTP, default) | ip | domain
-      export XUI_SSL_MODE="${XUI_SSL_MODE:-none}"
+      export NikanDeveloper_SSL_MODE="${NikanDeveloper_SSL_MODE:-none}"
       # Pin credentials instead of random (leave unset for secure random values):
-      #   export XUI_USERNAME="admin2"
-      #   export XUI_PASSWORD="change-me-please"
-      #   export XUI_PANEL_PORT="2053"
-      #   export XUI_WEB_BASE_PATH="panel"
+      #   export NikanDeveloper_USERNAME="admin2"
+      #   export NikanDeveloper_PASSWORD="change-me-please"
+      #   export NikanDeveloper_PANEL_PORT="2053"
+      #   export NikanDeveloper_WEB_BASE_PATH="panel"
       # Let's Encrypt domain certificate instead of plain HTTP:
-      #   export XUI_SSL_MODE="domain"
-      #   export XUI_DOMAIN="panel.example.com"
-      #   export XUI_ACME_EMAIL="you@example.com"
+      #   export NikanDeveloper_SSL_MODE="domain"
+      #   export NikanDeveloper_DOMAIN="panel.example.com"
+      #   export NikanDeveloper_ACME_EMAIL="you@example.com"
       # PostgreSQL instead of SQLite:
-      #   export XUI_DB_TYPE="postgres"
-      #   export XUI_DB_DSN="postgres://user:pass@host:5432/db?sslmode=disable"
+      #   export NikanDeveloper_DB_TYPE="postgres"
+      #   export NikanDeveloper_DB_DSN="postgres://user:pass@host:5432/db?sslmode=disable"
       # ------------------------------------------------------------------------
 
-      curl -fsSL https://raw.githubusercontent.com/MHSanaei/3x-ui/main/install.sh | bash
+      curl -fsSL https://raw.githubusercontent.com/NikanDeveloper56/Nikan.Developer/main/install.sh | bash
 
       # Surface the generated credentials. Full creds (incl. password + API token)
       # go ONLY to the serial console (/dev/console, owner-only). /etc/motd is
       # world-readable, so it gets just the access URL + username and a pointer
       # to the root-only env file.
-      if [ -r /etc/x-ui/install-result.env ]; then
+      if [ -r /etc/nikan-developer/install-result.env ]; then
         {
           echo
-          echo "=== 3x-ui panel credentials (generated on first boot) ==="
-          cat /etc/x-ui/install-result.env
+          echo "=== Nikan.Developer panel credentials (generated on first boot) ==="
+          cat /etc/nikan-developer/install-result.env
           echo "========================================================"
           echo "Change the password after first login."
         } > /dev/console 2>/dev/null || true
 
         # shellcheck disable=SC1091
-        . /etc/x-ui/install-result.env
+        . /etc/nikan-developer/install-result.env
         {
           echo
-          echo "=== 3x-ui panel (generated on first boot) ==="
-          echo "URL:      ${XUI_ACCESS_URL:-unknown}"
-          echo "Username: ${XUI_USERNAME:-unknown}"
-          echo "Password + API token: sudo cat /etc/x-ui/install-result.env"
+          echo "=== Nikan.Developer panel (generated on first boot) ==="
+          echo "URL:      ${NikanDeveloper_ACCESS_URL:-unknown}"
+          echo "Username: ${NikanDeveloper_USERNAME:-unknown}"
+          echo "Password + API token: sudo cat /etc/nikan-developer/install-result.env"
           echo "============================================="
           echo "Change the password after first login."
         } >> /etc/motd 2>/dev/null || true
@@ -75,4 +75,4 @@ write_files:
 runcmd:
   - [bash, /opt/xui-bootstrap.sh]
 
-final_message: "3x-ui installed — full credentials in /etc/x-ui/install-result.env (sudo); /etc/motd shows the URL + username only."
+final_message: "Nikan.Developer installed — full credentials in /etc/nikan-developer/install-result.env (sudo); /etc/motd shows the URL + username only."

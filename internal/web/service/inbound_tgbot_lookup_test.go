@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray"
 )
 
 // TestGetClientTrafficTgBot_SettingsSerializationStyles guards against the
@@ -16,8 +16,8 @@ import (
 // written by the panel's MarshalIndent).
 func TestGetClientTrafficTgBot_SettingsSerializationStyles(t *testing.T) {
 	dbDir := t.TempDir()
-	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", dbDir)
+	if err := database.InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })

@@ -259,7 +259,7 @@ export default function SubscriptionGeneralTab({
                   <>
                     {t('pages.settings.subThemeDirDesc')}{' '}
                     <a
-                      href="https://github.com/MHSanaei/3x-ui/blob/main/docs/custom-subscription-templates.md"
+                      href="https://github.com/NikanDeveloper56/Nikan.Developer/blob/main/docs/custom-subscription-templates.md"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -270,7 +270,7 @@ export default function SubscriptionGeneralTab({
               >
                 <Input
                   value={allSetting.subThemeDir}
-                  placeholder="/etc/3x-ui/sub_templates/my-theme/"
+                  placeholder="/etc/Nikan.Developer/sub_templates/my-theme/"
                   onChange={(e) => updateSetting({ subThemeDir: e.target.value })}
                 />
               </SettingListItem>

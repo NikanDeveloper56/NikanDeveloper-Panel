@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
 )
 
 // seedWarp stores warp credentials (with a Warp Plus license key) in the DB.
@@ -69,7 +69,7 @@ func withWarpAPIBase(t *testing.T, base string) {
 }
 
 func TestChangeWarpIPPreservesLicenseKey(t *testing.T) {
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	if err := database.InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })
@@ -124,7 +124,7 @@ func TestChangeWarpIPPreservesLicenseKey(t *testing.T) {
 }
 
 func TestChangeWarpIPKeepsLicenseWhenReapplyFails(t *testing.T) {
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	if err := database.InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })

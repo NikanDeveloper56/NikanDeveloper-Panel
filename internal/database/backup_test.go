@@ -11,12 +11,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
 )
 
 func TestBackupSQLiteProducesValidSnapshotDuringWrites(t *testing.T) {
-	t.Setenv("XUI_DB_JOURNAL_MODE", "")
-	dbPath := filepath.Join(t.TempDir(), "x-ui.db")
+	t.Setenv("NikanDeveloper_DB_JOURNAL_MODE", "")
+	dbPath := filepath.Join(t.TempDir(), "nikan-developer.db")
 	if err := InitDB(dbPath); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
@@ -96,8 +96,8 @@ func TestBackupSQLiteProducesValidSnapshotDuringWrites(t *testing.T) {
 }
 
 func TestBackupSQLiteTimesOutWaitingForSourceConnection(t *testing.T) {
-	t.Setenv("XUI_DB_JOURNAL_MODE", "")
-	if err := InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_JOURNAL_MODE", "")
+	if err := InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = CloseDB() })
@@ -123,8 +123,8 @@ func TestBackupSQLiteTimesOutWaitingForSourceConnection(t *testing.T) {
 }
 
 func TestBackupSQLiteRefusesExistingDestination(t *testing.T) {
-	t.Setenv("XUI_DB_JOURNAL_MODE", "")
-	if err := InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_JOURNAL_MODE", "")
+	if err := InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = CloseDB() })
@@ -148,18 +148,18 @@ func TestBackupSQLiteRefusesExistingDestination(t *testing.T) {
 }
 
 func TestBackupSQLiteStepPages(t *testing.T) {
-	t.Setenv("XUI_DB_JOURNAL_MODE", "")
+	t.Setenv("NikanDeveloper_DB_JOURNAL_MODE", "")
 	if got := backupSQLiteStepPages(); got != -1 {
 		t.Fatalf("WAL backup step pages = %d, want -1", got)
 	}
-	t.Setenv("XUI_DB_JOURNAL_MODE", "DELETE")
+	t.Setenv("NikanDeveloper_DB_JOURNAL_MODE", "DELETE")
 	if got := backupSQLiteStepPages(); got != 128 {
 		t.Fatalf("DELETE backup step pages = %d, want 128", got)
 	}
 }
 
 func TestInitDBCleansBackupDirectories(t *testing.T) {
-	t.Setenv("XUI_DB_JOURNAL_MODE", "")
+	t.Setenv("NikanDeveloper_DB_JOURNAL_MODE", "")
 	dbDir := t.TempDir()
 	orphanDir := filepath.Join(dbDir, sqliteBackupDirPrefix+"orphan")
 	if err := os.Mkdir(orphanDir, 0o700); err != nil {
@@ -168,12 +168,12 @@ func TestInitDBCleansBackupDirectories(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(orphanDir, "backup.db"), []byte("backup"), 0o600); err != nil {
 		t.Fatalf("write orphan backup: %v", err)
 	}
-	regularDir := filepath.Join(dbDir, ".x-ui-keep")
+	regularDir := filepath.Join(dbDir, ".nikan-developer-keep")
 	if err := os.Mkdir(regularDir, 0o700); err != nil {
 		t.Fatalf("create regular directory: %v", err)
 	}
 
-	if err := InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	if err := InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = CloseDB() })

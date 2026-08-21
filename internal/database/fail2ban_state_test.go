@@ -7,8 +7,8 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/config"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/config"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
 )
 
 // stubFail2banClient puts a fail2ban-client on PATH whose exit code the test picks.
@@ -57,7 +57,7 @@ func TestResetIpLimitsKeepsConfiguredLimitsWhenProbeFails(t *testing.T) {
 	if runtime.GOOS == "windows" {
 		t.Skip("fail2ban shell fixtures are Unix-only")
 	}
-	t.Setenv("XUI_DB_FOLDER", t.TempDir())
+	t.Setenv("NikanDeveloper_DB_FOLDER", t.TempDir())
 	if err := InitDB(config.GetDBPath()); err != nil {
 		t.Fatalf("init db: %v", err)
 	}

@@ -37,7 +37,7 @@ func applyGCPercent() string {
 	}
 
 	pct := defaultGCPercent
-	if v := strings.TrimSpace(os.Getenv("XUI_GOGC")); v != "" {
+	if v := strings.TrimSpace(os.Getenv("NikanDeveloper_GOGC")); v != "" {
 		if n, err := strconv.Atoi(v); err == nil {
 			pct = n
 		}
@@ -51,18 +51,18 @@ func applyGCPercent() string {
 }
 
 // applyMemoryLimit sets the soft limit only from an explicit budget: GOMEMLIMIT
-// env (left to the runtime), XUI_MEMORY_LIMIT in MiB, or a real cgroup limit at
+// env (left to the runtime), NikanDeveloper_MEMORY_LIMIT in MiB, or a real cgroup limit at
 // 90% to leave headroom for non-heap and the xray child. No budget -> Go default.
 func applyMemoryLimit() (int64, string) {
 	if strings.TrimSpace(os.Getenv("GOMEMLIMIT")) != "" {
 		return 0, "GOMEMLIMIT env (handled by the Go runtime)"
 	}
 
-	if v := strings.TrimSpace(os.Getenv("XUI_MEMORY_LIMIT")); v != "" {
+	if v := strings.TrimSpace(os.Getenv("NikanDeveloper_MEMORY_LIMIT")); v != "" {
 		if mb, err := strconv.ParseInt(v, 10, 64); err == nil && mb > 0 {
 			limit := mb << 20
 			debug.SetMemoryLimit(limit)
-			return limit, "XUI_MEMORY_LIMIT=" + v + "MiB"
+			return limit, "NikanDeveloper_MEMORY_LIMIT=" + v + "MiB"
 		}
 	}
 
@@ -76,10 +76,10 @@ func applyMemoryLimit() (int64, string) {
 }
 
 // MemoryReleaseIntervalMinutes reports how often freed heap memory is returned to
-// the OS via debug.FreeOSMemory. XUI_MEMORY_RELEASE_INTERVAL overrides the
+// the OS via debug.FreeOSMemory. NikanDeveloper_MEMORY_RELEASE_INTERVAL overrides the
 // default; an explicit 0 disables the periodic release.
 func MemoryReleaseIntervalMinutes() int {
-	v := strings.TrimSpace(os.Getenv("XUI_MEMORY_RELEASE_INTERVAL"))
+	v := strings.TrimSpace(os.Getenv("NikanDeveloper_MEMORY_RELEASE_INTERVAL"))
 	if v == "" {
 		return defaultReleaseMinutes
 	}

@@ -1,9 +1,9 @@
 package job
 
 import (
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/sub"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/sub"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
 )
 
 // RemoteRoutingJob keeps remote Happ and Clash/Mihomo routing URLs warm: all

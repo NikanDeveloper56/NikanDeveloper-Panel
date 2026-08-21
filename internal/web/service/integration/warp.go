@@ -10,10 +10,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/wireguard"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/common"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/wireguard"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
 )
 
 // WarpService provides business logic for Cloudflare WARP integration.
@@ -64,7 +64,7 @@ func (s *WarpService) RegWarp(secretKey string, publicKey string) (string, error
 		"key":   publicKey,
 		"tos":   time.Now().UTC().Format("2006-01-02T15:04:05.000Z"),
 		"type":  "PC",
-		"model": "x-ui",
+		"model": "nikan-developer",
 		"name":  hostName,
 	})
 	if err != nil {

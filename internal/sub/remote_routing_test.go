@@ -16,7 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 	yaml "github.com/goccy/go-yaml"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
 )
 
 func mergeRemoteClashRulesYAML(base map[string]any, raw string) error {
@@ -604,7 +604,7 @@ func TestRemoteRoutingHTTPClientRejectsLoopback(t *testing.T) {
 }
 
 func TestRemoteRoutingPersistedLoadRetriesAfterDatabaseBecomesReady(t *testing.T) {
-	dbPath := filepath.Join(t.TempDir(), "x-ui.db")
+	dbPath := filepath.Join(t.TempDir(), "nikan-developer.db")
 	if err := database.InitDB(dbPath); err != nil {
 		t.Fatalf("init db: %v", err)
 	}

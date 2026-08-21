@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/runtime"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/runtime"
 )
 
 type blockingResetRuntime struct {

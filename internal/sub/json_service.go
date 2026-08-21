@@ -7,10 +7,10 @@ import (
 	"maps"
 	"strings"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/json_util"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/random"
-	wgutil "github.com/mhsanaei/3x-ui/v3/internal/util/wireguard"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/json_util"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/random"
+	wgutil "github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/wireguard"
 )
 
 //go:embed default.json

@@ -82,18 +82,18 @@ os_version=""
 os_version=$(grep "^VERSION_ID" /etc/os-release | cut -d '=' -f2 | tr -d '"' | tr -d '.')
 
 running_in_docker="false"
-if [[ -f /.dockerenv ]] || [[ "${XUI_IN_DOCKER}" == "true" ]]; then
+if [[ -f /.dockerenv ]] || [[ "${NikanDeveloper_IN_DOCKER}" == "true" ]]; then
     running_in_docker="true"
 fi
 
 # Declare Variables
 if [[ "${running_in_docker}" == "true" ]]; then
-    xui_folder="${XUI_MAIN_FOLDER:=/app}"
+    xui_folder="${NikanDeveloper_MAIN_FOLDER:=/app}"
 else
-    xui_folder="${XUI_MAIN_FOLDER:=/usr/local/x-ui}"
+    xui_folder="${NikanDeveloper_MAIN_FOLDER:=/usr/local/nikan-developer}"
 fi
-xui_service="${XUI_SERVICE:=/etc/systemd/system}"
-log_folder="${XUI_LOG_FOLDER:=/var/log/x-ui}"
+xui_service="${NikanDeveloper_SERVICE:=/etc/systemd/system}"
+log_folder="${NikanDeveloper_LOG_FOLDER:=/var/log/nikan-developer}"
 mkdir -p "${log_folder}"
 iplimit_log_path="${log_folder}/3xipl.log"
 iplimit_banned_log_path="${log_folder}/3xipl-banned.log"
@@ -129,7 +129,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls https://raw.githubusercontent.com/MHSanaei/3x-ui/main/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/NikanDeveloper56/Nikan.Developer/main/install.sh)
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
@@ -140,7 +140,7 @@ install() {
 }
 
 update() {
-    confirm "This function will update all x-ui components to the latest version, and the data will not be lost. Do you want to continue?" "y"
+    confirm "This function will update all nikan-developer components to the latest version, and the data will not be lost. Do you want to continue?" "y"
     if [[ $? != 0 ]]; then
         LOGE "Cancelled"
         if [[ $# == 0 ]]; then
@@ -148,7 +148,7 @@ update() {
         fi
         return 0
     fi
-    bash <(curl -Ls https://raw.githubusercontent.com/MHSanaei/3x-ui/main/update.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/NikanDeveloper56/Nikan.Developer/main/update.sh)
     if [[ $? == 0 ]]; then
         LOGI "Update is complete, Panel has automatically restarted "
         before_show_menu
@@ -156,7 +156,7 @@ update() {
 }
 
 update_dev() {
-    confirm "This will update x-ui to the latest DEV commit (the rolling 'dev-latest' build, not a stable release). Your data is preserved. Continue?" "y"
+    confirm "This will update nikan-developer to the latest DEV commit (the rolling 'dev-latest' build, not a stable release). Your data is preserved. Continue?" "y"
     if [[ $? != 0 ]]; then
         LOGE "Cancelled"
         if [[ $# == 0 ]]; then
@@ -164,9 +164,9 @@ update_dev() {
         fi
         return 0
     fi
-    # XUI_UPDATE_TAG tells update.sh to install the dev-latest pre-release
+    # NikanDeveloper_UPDATE_TAG tells update.sh to install the dev-latest pre-release
     # instead of the latest stable tag.
-    XUI_UPDATE_TAG="dev-latest" bash <(curl -Ls https://raw.githubusercontent.com/MHSanaei/3x-ui/main/update.sh)
+    NikanDeveloper_UPDATE_TAG="dev-latest" bash <(curl -Ls https://raw.githubusercontent.com/NikanDeveloper56/Nikan.Developer/main/update.sh)
     if [[ $? == 0 ]]; then
         LOGI "Dev update is complete, Panel has automatically restarted "
         before_show_menu
@@ -176,11 +176,11 @@ update_dev() {
 replace_xui_script() {
     local url="$1"
     local use_if_modified_since="$2"
-    local temp_file="/usr/bin/x-ui-temp.$$"
+    local temp_file="/usr/bin/nikan-developer-temp.$$"
 
     rm -f "$temp_file"
     if [[ "$use_if_modified_since" == "true" ]]; then
-        curl -fLRo "$temp_file" -z /usr/bin/x-ui "$url"
+        curl -fLRo "$temp_file" -z /usr/bin/nikan-developer "$url"
     else
         curl -fLRo "$temp_file" "$url"
     fi
@@ -191,20 +191,20 @@ replace_xui_script() {
 
     if [[ ! -s "$temp_file" ]]; then
         rm -f "$temp_file"
-        # -z above means "not modified since /usr/bin/x-ui" rather than a
+        # -z above means "not modified since /usr/bin/nikan-developer" rather than a
         # real failure, so an empty download here is success, not an error.
         [[ "$use_if_modified_since" == "true" ]] && return 0
         return 1
     fi
 
-    mv -f "$temp_file" /usr/bin/x-ui
+    mv -f "$temp_file" /usr/bin/nikan-developer
     if [[ $? != 0 ]]; then
         rm -f "$temp_file"
         return 1
     fi
     # The move already landed the new script; a transient chmod failure here
     # shouldn't make callers think the whole replace failed.
-    chmod +x /usr/bin/x-ui
+    chmod +x /usr/bin/nikan-developer
     return 0
 }
 
@@ -219,8 +219,8 @@ update_menu() {
         return 0
     fi
 
-    if replace_xui_script "https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.sh" "false"; then
-        chmod +x ${xui_folder}/x-ui.sh
+    if replace_xui_script "https://raw.githubusercontent.com/NikanDeveloper56/Nikan.Developer/main/nikan-developer.sh" "false"; then
+        chmod +x ${xui_folder}/nikan-developer.sh
         echo -e "${green}Update successful. The panel has automatically restarted.${plain}"
         exit 0
     else
@@ -238,7 +238,7 @@ legacy_version() {
         exit 1
     fi
     # Use the entered panel version in the download link
-    install_command="bash <(curl -Ls "https://raw.githubusercontent.com/mhsanaei/3x-ui/v$tag_version/install.sh") v$tag_version"
+    install_command="bash <(curl -Ls "https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/v$tag_version/install.sh") v$tag_version"
 
     echo "Downloading and installing panel version $tag_version..."
     eval $install_command
@@ -253,13 +253,13 @@ delete_script() {
 xui_env_file_path() {
     case "${release}" in
         ubuntu | debian | armbian)
-            echo "/etc/default/x-ui"
+            echo "/etc/default/nikan-developer"
             ;;
         arch | manjaro | parch | alpine)
-            echo "/etc/conf.d/x-ui"
+            echo "/etc/conf.d/nikan-developer"
             ;;
         *)
-            echo "/etc/sysconfig/x-ui"
+            echo "/etc/sysconfig/nikan-developer"
             ;;
     esac
 }
@@ -274,13 +274,13 @@ uninstall() {
     fi
 
     if [[ $release == "alpine" ]]; then
-        rc-service x-ui stop
-        rc-update del x-ui
-        rm /etc/init.d/x-ui -f
+        rc-service nikan-developer stop
+        rc-update del nikan-developer
+        rm /etc/init.d/nikan-developer -f
     else
-        systemctl stop x-ui
-        systemctl disable x-ui
-        rm ${xui_service}/x-ui.service -f
+        systemctl stop nikan-developer
+        systemctl disable nikan-developer
+        rm ${xui_service}/nikan-developer.service -f
         systemctl daemon-reload
         systemctl reset-failed
     fi
@@ -288,11 +288,11 @@ uninstall() {
     local panel_used_postgres="false"
     local db_env_file
     db_env_file="$(xui_env_file_path)"
-    if [[ -r "$db_env_file" ]] && grep -q '^XUI_DB_TYPE=postgres' "$db_env_file"; then
+    if [[ -r "$db_env_file" ]] && grep -q '^NikanDeveloper_DB_TYPE=postgres' "$db_env_file"; then
         panel_used_postgres="true"
     fi
 
-    rm /etc/x-ui/ -rf
+    rm /etc/nikan-developer/ -rf
     rm ${xui_folder}/ -rf
     rm -f "$db_env_file"
 
@@ -303,7 +303,7 @@ uninstall() {
     echo ""
     echo -e "Uninstalled Successfully.\n"
     echo "If you need to install this panel again, you can use below command:"
-    echo -e "${green}bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)${plain}"
+    echo -e "${green}bash <(curl -Ls https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh)${plain}"
     echo ""
     # Trap the SIGTERM signal
     trap delete_script SIGTERM
@@ -326,15 +326,15 @@ reset_user() {
 
     read -rp "Do you want to disable currently configured two-factor authentication? (y/n): " twoFactorConfirm
     if [[ $twoFactorConfirm != "y" && $twoFactorConfirm != "Y" ]]; then
-        ${xui_folder}/x-ui setting -username "${config_account}" -password "${config_password}" > /dev/null 2>&1
+        ${xui_folder}/nikan-developer setting -username "${config_account}" -password "${config_password}" > /dev/null 2>&1
     else
-        ${xui_folder}/x-ui setting -username "${config_account}" -password "${config_password}" -resetTwoFactor=true > /dev/null 2>&1
+        ${xui_folder}/nikan-developer setting -username "${config_account}" -password "${config_password}" -resetTwoFactor=true > /dev/null 2>&1
         echo -e "Two factor authentication has been disabled."
     fi
 
     echo -e "Panel login username has been reset to: ${green} ${config_account} ${plain}"
     echo -e "Panel login password has been reset to: ${green} ${config_password} ${plain}"
-    echo -e "${green} Please use the new login username and password to access the X-UI panel. Also remember them! ${plain}"
+    echo -e "${green} Please use the new login username and password to access the Nikan.Developer panel. Also remember them! ${plain}"
     confirm_restart
 }
 
@@ -357,7 +357,7 @@ reset_webbasepath() {
     config_webBasePath=$(gen_random_string 18)
 
     # Apply the new web base path setting
-    ${xui_folder}/x-ui setting -webBasePath "${config_webBasePath}" > /dev/null 2>&1
+    ${xui_folder}/nikan-developer setting -webBasePath "${config_webBasePath}" > /dev/null 2>&1
 
     echo -e "Web base path has been reset to: ${green}${config_webBasePath}${plain}"
     echo -e "${green}Please use the new web base path to access the panel.${plain}"
@@ -372,13 +372,13 @@ reset_config() {
         fi
         return 0
     fi
-    ${xui_folder}/x-ui setting -reset
+    ${xui_folder}/nikan-developer setting -reset
     echo -e "All panel settings have been reset to default."
     restart
 }
 
 check_config() {
-    local info=$(${xui_folder}/x-ui setting -show true)
+    local info=$(${xui_folder}/nikan-developer setting -show true)
     if [[ $? != 0 ]]; then
         LOGE "get current settings error, please check logs"
         show_menu
@@ -388,19 +388,19 @@ check_config() {
 
     local db_env_file
     db_env_file="$(xui_env_file_path)"
-    if [[ -r "$db_env_file" ]] && grep -q '^XUI_DB_TYPE=postgres' "$db_env_file"; then
+    if [[ -r "$db_env_file" ]] && grep -q '^NikanDeveloper_DB_TYPE=postgres' "$db_env_file"; then
         local dsn
-        dsn="$(grep -E '^XUI_DB_DSN=' "$db_env_file" | head -1 | cut -d= -f2-)"
+        dsn="$(grep -E '^NikanDeveloper_DB_DSN=' "$db_env_file" | head -1 | cut -d= -f2-)"
         local dsn_safe
         dsn_safe="$(echo "$dsn" | sed -E 's|(://[^:/@]+:)[^@]+@|\1****@|')"
         echo -e "${green}Database: PostgreSQL — ${dsn_safe}${plain}"
     else
-        echo -e "${green}Database: SQLite (/etc/x-ui/x-ui.db)${plain}"
+        echo -e "${green}Database: SQLite (/etc/nikan-developer/nikan-developer.db)${plain}"
     fi
 
     local existing_webBasePath=$(echo "$info" | grep -Eo 'webBasePath: .+' | awk '{print $2}')
     local existing_port=$(echo "$info" | grep -Eo 'port: .+' | awk '{print $2}')
-    local existing_cert=$(${xui_folder}/x-ui setting -getCert true | grep 'cert:' | awk -F': ' '{print $2}' | tr -d '[:space:]')
+    local existing_cert=$(${xui_folder}/nikan-developer setting -getCert true | grep 'cert:' | awk -F': ' '{print $2}' | tr -d '[:space:]')
     local URL_lists=(
         "https://api4.ipify.org"
         "https://ipv4.icanhazip.com"
@@ -484,7 +484,7 @@ set_port() {
         LOGD "Cancelled"
         before_show_menu
     else
-        ${xui_folder}/x-ui setting -port ${port}
+        ${xui_folder}/nikan-developer setting -port ${port}
         echo -e "The port is set, Please restart the panel now, and use the new port ${green}${port}${plain} to access web panel"
         confirm_restart
     fi
@@ -506,14 +506,14 @@ start() {
             return 0
         fi
         if [[ $release == "alpine" ]]; then
-            rc-service x-ui start
+            rc-service nikan-developer start
         else
-            systemctl start x-ui
+            systemctl start nikan-developer
         fi
         sleep 2
         check_status
         if [[ $? == 0 ]]; then
-            LOGI "x-ui Started Successfully"
+            LOGI "nikan-developer Started Successfully"
         else
             LOGE "panel Failed to start, Probably because it takes longer than two seconds to start, Please check the log information later"
         fi
@@ -540,14 +540,14 @@ stop() {
             return 0
         fi
         if [[ $release == "alpine" ]]; then
-            rc-service x-ui stop
+            rc-service nikan-developer stop
         else
-            systemctl stop x-ui
+            systemctl stop nikan-developer
         fi
         sleep 2
         check_status
         if [[ $? == 1 ]]; then
-            LOGI "x-ui and xray stopped successfully"
+            LOGI "nikan-developer and xray stopped successfully"
         else
             LOGE "Panel stop failed, Probably because the stop time exceeds two seconds, Please check the log information later"
         fi
@@ -570,7 +570,7 @@ restart() {
         sleep 2
         check_status
         if [[ $? == 0 ]]; then
-            LOGI "x-ui and xray Restarted successfully"
+            LOGI "nikan-developer and xray Restarted successfully"
         else
             LOGE "Panel restart failed, Please check the log information later"
         fi
@@ -580,14 +580,14 @@ restart() {
         return 0
     fi
     if [[ $release == "alpine" ]]; then
-        rc-service x-ui restart
+        rc-service nikan-developer restart
     else
-        systemctl restart x-ui
+        systemctl restart nikan-developer
     fi
     sleep 2
     check_status
     if [[ $? == 0 ]]; then
-        LOGI "x-ui and xray Restarted successfully"
+        LOGI "nikan-developer and xray Restarted successfully"
     else
         LOGE "Panel restart failed, Probably because it takes longer than two seconds to start, Please check the log information later"
     fi
@@ -611,9 +611,9 @@ restart_xray() {
         return 0
     fi
     if [[ $release == "alpine" ]]; then
-        rc-service x-ui reload
+        rc-service nikan-developer reload
     else
-        systemctl reload x-ui
+        systemctl reload nikan-developer
     fi
     LOGI "xray-core Restart signal sent successfully, Please check the log information to confirm whether xray restarted successfully"
     sleep 2
@@ -632,9 +632,9 @@ status() {
         return 0
     fi
     if [[ $release == "alpine" ]]; then
-        rc-service x-ui status
+        rc-service nikan-developer status
     else
-        systemctl status x-ui -l
+        systemctl status nikan-developer -l
     fi
     if [[ $# == 0 ]]; then
         before_show_menu
@@ -651,14 +651,14 @@ enable() {
         return 0
     fi
     if [[ $release == "alpine" ]]; then
-        rc-update add x-ui default
+        rc-update add nikan-developer default
     else
-        systemctl enable x-ui
+        systemctl enable nikan-developer
     fi
     if [[ $? == 0 ]]; then
-        LOGI "x-ui Set to boot automatically on startup successfully"
+        LOGI "nikan-developer Set to boot automatically on startup successfully"
     else
-        LOGE "x-ui Failed to set Autostart"
+        LOGE "nikan-developer Failed to set Autostart"
     fi
 
     if [[ $# == 0 ]]; then
@@ -676,14 +676,14 @@ disable() {
         return 0
     fi
     if [[ $release == "alpine" ]]; then
-        rc-update del x-ui
+        rc-update del nikan-developer
     else
-        systemctl disable x-ui
+        systemctl disable nikan-developer
     fi
     if [[ $? == 0 ]]; then
-        LOGI "x-ui Autostart Cancelled successfully"
+        LOGI "nikan-developer Autostart Cancelled successfully"
     else
-        LOGE "x-ui Failed to cancel autostart"
+        LOGE "nikan-developer Failed to cancel autostart"
     fi
 
     if [[ $# == 0 ]]; then
@@ -702,7 +702,7 @@ show_log() {
                 show_menu
                 ;;
             1)
-                grep -F 'x-ui[' /var/log/messages
+                grep -F 'nikan-developer[' /var/log/messages
                 if [[ $# == 0 ]]; then
                     before_show_menu
                 fi
@@ -723,7 +723,7 @@ show_log() {
                 show_menu
                 ;;
             1)
-                journalctl -u x-ui -e --no-pager -f -p debug
+                journalctl -u nikan-developer -e --no-pager -f -p debug
                 if [[ $# == 0 ]]; then
                     before_show_menu
                 fi
@@ -773,14 +773,14 @@ disable_bbr() {
         before_show_menu
     fi
 
-    if [ -f "/etc/sysctl.d/99-bbr-x-ui.conf" ]; then
-        old_settings=$(head -1 /etc/sysctl.d/99-bbr-x-ui.conf | tr -d '#')
+    if [ -f "/etc/sysctl.d/99-bbr-nikan-developer.conf" ]; then
+        old_settings=$(head -1 /etc/sysctl.d/99-bbr-nikan-developer.conf | tr -d '#')
         # sysctl -w already restores the live values, so no `sysctl --system`
         # afterwards — it would re-apply every sysctl file on the host and
         # surface unrelated errors from the distro's own defaults (see issue #5160)
         sysctl -w net.core.default_qdisc="${old_settings%:*}"
         sysctl -w net.ipv4.tcp_congestion_control="${old_settings#*:}"
-        rm /etc/sysctl.d/99-bbr-x-ui.conf
+        rm /etc/sysctl.d/99-bbr-nikan-developer.conf
     else
         # Replace BBR with CUBIC configurations
         if [ -f "/etc/sysctl.conf" ]; then
@@ -809,7 +809,7 @@ enable_bbr() {
             echo "#$(sysctl -n net.core.default_qdisc):$(sysctl -n net.ipv4.tcp_congestion_control)"
             echo "net.core.default_qdisc = fq"
             echo "net.ipv4.tcp_congestion_control = bbr"
-        } > "/etc/sysctl.d/99-bbr-x-ui.conf"
+        } > "/etc/sysctl.d/99-bbr-nikan-developer.conf"
         if [ -f "/etc/sysctl.conf" ]; then
             # Backup old settings from sysctl.conf, if any
             sed -i 's/^net.core.default_qdisc/# &/' /etc/sysctl.conf
@@ -818,7 +818,7 @@ enable_bbr() {
         # Apply only our config file; `sysctl --system` would re-apply every
         # sysctl file on the host and surface unrelated errors from the distro's
         # own defaults (see issue #5160)
-        sysctl -p /etc/sysctl.d/99-bbr-x-ui.conf
+        sysctl -p /etc/sysctl.d/99-bbr-nikan-developer.conf
     else
         sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
         sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
@@ -836,7 +836,7 @@ enable_bbr() {
 }
 
 update_shell() {
-    if replace_xui_script "https://github.com/MHSanaei/3x-ui/raw/main/x-ui.sh" "true"; then
+    if replace_xui_script "https://github.com/NikanDeveloper56/Nikan.Developer/raw/main/nikan-developer.sh" "true"; then
         LOGI "Upgrade script succeeded, Please rerun the script"
         before_show_menu
     else
@@ -847,7 +847,7 @@ update_shell() {
 }
 
 xui_pid() {
-    ps -ef 2> /dev/null | grep -F "${xui_folder}/x-ui" | grep -v grep | awk 'NR==1 {print $1}'
+    ps -ef 2> /dev/null | grep -F "${xui_folder}/nikan-developer" | grep -v grep | awk 'NR==1 {print $1}'
 }
 
 signal_xui() {
@@ -862,7 +862,7 @@ signal_xui() {
 # 0: running, 1: not running, 2: not installed
 check_status() {
     if [[ "${running_in_docker}" == "true" ]]; then
-        if [[ ! -x "${xui_folder}/x-ui" ]]; then
+        if [[ ! -x "${xui_folder}/nikan-developer" ]]; then
             return 2
         fi
         if [[ -n "$(xui_pid)" ]]; then
@@ -872,19 +872,19 @@ check_status() {
         fi
     fi
     if [[ $release == "alpine" ]]; then
-        if [[ ! -f /etc/init.d/x-ui ]]; then
+        if [[ ! -f /etc/init.d/nikan-developer ]]; then
             return 2
         fi
-        if [[ $(rc-service x-ui status | grep -F 'status: started' -c) == 1 ]]; then
+        if [[ $(rc-service nikan-developer status | grep -F 'status: started' -c) == 1 ]]; then
             return 0
         else
             return 1
         fi
     else
-        if [[ ! -f ${xui_service}/x-ui.service ]]; then
+        if [[ ! -f ${xui_service}/nikan-developer.service ]]; then
             return 2
         fi
-        temp=$(systemctl status x-ui | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+        temp=$(systemctl status nikan-developer | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
         if [[ "${temp}" == "running" ]]; then
             return 0
         else
@@ -895,13 +895,13 @@ check_status() {
 
 check_enabled() {
     if [[ $release == "alpine" ]]; then
-        if [[ $(rc-update show | grep -F 'x-ui' | grep default -c) == 1 ]]; then
+        if [[ $(rc-update show | grep -F 'nikan-developer' | grep default -c) == 1 ]]; then
             return 0
         else
             return 1
         fi
     else
-        temp=$(systemctl is-enabled x-ui)
+        temp=$(systemctl is-enabled nikan-developer)
         if [[ "${temp}" == "enabled" ]]; then
             return 0
         else
@@ -1386,9 +1386,9 @@ ssl_cert_issue_main() {
 
                     # If the panel currently serves this domain's cert, clear the stored paths
                     # so it stops loading the now-deleted files, then restart.
-                    local existing_cert=$(${xui_folder}/x-ui setting -getCert true | grep 'cert:' | awk -F': ' '{print $2}' | tr -d '[:space:]')
+                    local existing_cert=$(${xui_folder}/nikan-developer setting -getCert true | grep 'cert:' | awk -F': ' '{print $2}' | tr -d '[:space:]')
                     if [[ "${existing_cert}" == "/root/cert/${domain}/"* ]]; then
-                        ${xui_folder}/x-ui cert -reset
+                        ${xui_folder}/nikan-developer cert -reset
                         LOGI "Cleared panel certificate paths referencing ${domain}; restarting panel."
                         restart
                     fi
@@ -1435,7 +1435,7 @@ ssl_cert_issue_main() {
             fi
             # The panel's configured certificate may live outside /root/cert
             # (e.g. certbot under /etc/letsencrypt) — show it too (#5070).
-            local panel_cert=$(${xui_folder}/x-ui setting -getCert true | grep 'cert:' | awk -F': ' '{print $2}' | tr -d '[:space:]')
+            local panel_cert=$(${xui_folder}/nikan-developer setting -getCert true | grep 'cert:' | awk -F': ' '{print $2}' | tr -d '[:space:]')
             if [[ -n "${panel_cert}" && "${panel_cert}" != /root/cert/* ]]; then
                 echo -e "Panel certificate (custom path): ${panel_cert}"
                 if [[ -f "${panel_cert}" ]] && command -v openssl > /dev/null 2>&1; then
@@ -1454,7 +1454,7 @@ ssl_cert_issue_main() {
                 read -rp "Certificate file path (fullchain): " webCertFile
                 read -rp "Private key file path: " webKeyFile
                 if [[ -f "${webCertFile}" && -f "${webKeyFile}" ]]; then
-                    ${xui_folder}/x-ui cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
+                    ${xui_folder}/nikan-developer cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
                     echo "Panel certificate paths set:"
                     echo "  - Certificate File: $webCertFile"
                     echo "  - Private Key File: $webKeyFile"
@@ -1478,7 +1478,7 @@ ssl_cert_issue_main() {
                     local webKeyFile="/root/cert/${domain}/privkey.pem"
 
                     if [[ -f "${webCertFile}" && -f "${webKeyFile}" ]]; then
-                        ${xui_folder}/x-ui cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
+                        ${xui_folder}/nikan-developer cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
                         echo "Panel paths set for domain: $domain"
                         echo "  - Certificate File: $webCertFile"
                         echo "  - Private Key File: $webKeyFile"
@@ -1489,7 +1489,7 @@ ssl_cert_issue_main() {
                             ~/.acme.sh/acme.sh --installcert --force -d "${domain}" \
                                 --key-file "${webKeyFile}" \
                                 --fullchain-file "${webCertFile}" \
-                                --reloadcmd "x-ui restart" 2>&1 || true
+                                --reloadcmd "nikan-developer restart" 2>&1 || true
                             echo "Registered acme.sh auto-renewal hook for ${domain}."
                         fi
                         restart
@@ -1525,8 +1525,8 @@ ssl_cert_issue_for_ip() {
     LOGI "Starting automatic SSL certificate generation for server IP..."
     LOGI "Using Let's Encrypt shortlived profile (~6 days validity, auto-renews)"
 
-    local existing_webBasePath=$(${xui_folder}/x-ui setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
-    local existing_port=$(${xui_folder}/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
+    local existing_webBasePath=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
+    local existing_port=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
 
     # Get server IP
     local URL_lists=(
@@ -1660,7 +1660,7 @@ ssl_cert_issue_for_ip() {
     done
 
     # Reload command - restarts panel after renewal
-    local reloadCmd="systemctl restart x-ui 2>/dev/null || rc-service x-ui restart 2>/dev/null"
+    local reloadCmd="systemctl restart nikan-developer 2>/dev/null || rc-service nikan-developer restart 2>/dev/null"
 
     # issue the certificate for IP with shortlived profile
     ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt --force
@@ -1717,7 +1717,7 @@ ssl_cert_issue_for_ip() {
     read -rp "Would you like to set this certificate for the panel? (y/n): " setPanel
     if [[ "$setPanel" == "y" || "$setPanel" == "Y" ]]; then
         if [[ -f "$webCertFile" && -f "$webKeyFile" ]]; then
-            ${xui_folder}/x-ui cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
+            ${xui_folder}/nikan-developer cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
             LOGI "Panel paths set for IP: $server_ip"
             LOGI "  - Certificate File: $webCertFile"
             LOGI "  - Private Key File: $webKeyFile"
@@ -1737,8 +1737,8 @@ ssl_cert_issue_for_ip() {
 }
 
 ssl_cert_issue() {
-    local existing_webBasePath=$(${xui_folder}/x-ui setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
-    local existing_port=$(${xui_folder}/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
+    local existing_webBasePath=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
+    local existing_port=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
     # check for acme.sh first
     if ! command -v ~/.acme.sh/acme.sh &> /dev/null; then
         echo "acme.sh could not be found. we will install it"
@@ -1867,24 +1867,24 @@ ssl_cert_issue() {
         LOGI "Using existing certificate, installing certificates..."
     fi
 
-    reloadCmd="x-ui restart"
+    reloadCmd="nikan-developer restart"
 
-    LOGI "Default --reloadcmd for ACME is: ${yellow}x-ui restart"
+    LOGI "Default --reloadcmd for ACME is: ${yellow}nikan-developer restart"
     LOGI "This command will run on every certificate issue and renew."
     read -rp "Would you like to modify --reloadcmd for ACME? (y/n): " setReloadcmd
     if [[ "$setReloadcmd" == "y" || "$setReloadcmd" == "Y" ]]; then
-        echo -e "\n${green}\t1.${plain} Preset: systemctl reload nginx ; x-ui restart"
+        echo -e "\n${green}\t1.${plain} Preset: systemctl reload nginx ; nikan-developer restart"
         echo -e "${green}\t2.${plain} Input your own command"
         echo -e "${green}\t0.${plain} Keep default reloadcmd"
         read -rp "Choose an option: " choice
         case "$choice" in
             1)
-                LOGI "Reloadcmd is: systemctl reload nginx ; x-ui restart"
-                reloadCmd="systemctl reload nginx ; x-ui restart"
+                LOGI "Reloadcmd is: systemctl reload nginx ; nikan-developer restart"
+                reloadCmd="systemctl reload nginx ; nikan-developer restart"
                 ;;
             2)
-                LOGD "It's recommended to put x-ui restart at the end, so it won't raise an error if other services fails"
-                read -rp "Please enter your reloadcmd (example: systemctl reload nginx ; x-ui restart): " reloadCmd
+                LOGD "It's recommended to put nikan-developer restart at the end, so it won't raise an error if other services fails"
+                read -rp "Please enter your reloadcmd (example: systemctl reload nginx ; nikan-developer restart): " reloadCmd
                 LOGI "Your reloadcmd is: ${reloadCmd}"
                 ;;
             *)
@@ -1938,7 +1938,7 @@ ssl_cert_issue() {
         local webKeyFile="/root/cert/${domain}/privkey.pem"
 
         if [[ -f "$webCertFile" && -f "$webKeyFile" ]]; then
-            ${xui_folder}/x-ui cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
+            ${xui_folder}/nikan-developer cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
             LOGI "Panel paths set for domain: $domain"
             LOGI "  - Certificate File: $webCertFile"
             LOGI "  - Private Key File: $webKeyFile"
@@ -1953,8 +1953,8 @@ ssl_cert_issue() {
 }
 
 ssl_cert_issue_CF() {
-    local existing_webBasePath=$(${xui_folder}/x-ui setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
-    local existing_port=$(${xui_folder}/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
+    local existing_webBasePath=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
+    local existing_port=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
     LOGI "****** Instructions for Use ******"
     LOGI "Follow the steps below to complete the process:"
     LOGI "1. A Cloudflare API Token (recommended, scoped to Zone:DNS:Edit) or the Global API Key + registered email."
@@ -2032,24 +2032,24 @@ ssl_cert_issue_CF() {
             exit 1
         fi
 
-        reloadCmd="x-ui restart"
+        reloadCmd="nikan-developer restart"
 
-        LOGI "Default --reloadcmd for ACME is: ${yellow}x-ui restart"
+        LOGI "Default --reloadcmd for ACME is: ${yellow}nikan-developer restart"
         LOGI "This command will run on every certificate issue and renew."
         read -rp "Would you like to modify --reloadcmd for ACME? (y/n): " setReloadcmd
         if [[ "$setReloadcmd" == "y" || "$setReloadcmd" == "Y" ]]; then
-            echo -e "\n${green}\t1.${plain} Preset: systemctl reload nginx ; x-ui restart"
+            echo -e "\n${green}\t1.${plain} Preset: systemctl reload nginx ; nikan-developer restart"
             echo -e "${green}\t2.${plain} Input your own command"
             echo -e "${green}\t0.${plain} Keep default reloadcmd"
             read -rp "Choose an option: " choice
             case "$choice" in
                 1)
-                    LOGI "Reloadcmd is: systemctl reload nginx ; x-ui restart"
-                    reloadCmd="systemctl reload nginx ; x-ui restart"
+                    LOGI "Reloadcmd is: systemctl reload nginx ; nikan-developer restart"
+                    reloadCmd="systemctl reload nginx ; nikan-developer restart"
                     ;;
                 2)
-                    LOGD "It's recommended to put x-ui restart at the end, so it won't raise an error if other services fails"
-                    read -rp "Please enter your reloadcmd (example: systemctl reload nginx ; x-ui restart): " reloadCmd
+                    LOGD "It's recommended to put nikan-developer restart at the end, so it won't raise an error if other services fails"
+                    read -rp "Please enter your reloadcmd (example: systemctl reload nginx ; nikan-developer restart): " reloadCmd
                     LOGI "Your reloadcmd is: ${reloadCmd}"
                     ;;
                 *)
@@ -2087,7 +2087,7 @@ ssl_cert_issue_CF() {
             local webKeyFile="${certPath}/privkey.pem"
 
             if [[ -f "$webCertFile" && -f "$webKeyFile" ]]; then
-                ${xui_folder}/x-ui cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
+                ${xui_folder}/nikan-developer cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
                 LOGI "Panel paths set for domain: $CF_Domain"
                 LOGI "  - Certificate File: $webCertFile"
                 LOGI "  - Private Key File: $webKeyFile"
@@ -2258,8 +2258,8 @@ setup_fail2ban_iplimit() {
     # Honor the same toggle the panel uses (isFail2BanEnabled): enabled when the
     # var is unset or exactly "true"; any other explicit value means the operator
     # opted out, so do nothing rather than install a fail2ban the panel ignores.
-    if [[ -n "${XUI_ENABLE_FAIL2BAN+x}" && "${XUI_ENABLE_FAIL2BAN}" != "true" ]]; then
-        echo -e "${yellow}XUI_ENABLE_FAIL2BAN=${XUI_ENABLE_FAIL2BAN}, skipping Fail2ban setup.${plain}\n"
+    if [[ -n "${NikanDeveloper_ENABLE_FAIL2BAN+x}" && "${NikanDeveloper_ENABLE_FAIL2BAN}" != "true" ]]; then
+        echo -e "${yellow}NikanDeveloper_ENABLE_FAIL2BAN=${NikanDeveloper_ENABLE_FAIL2BAN}, skipping Fail2ban setup.${plain}\n"
         return 0
     fi
 
@@ -2373,7 +2373,7 @@ setup_fail2ban_iplimit() {
 
 # install_iplimit is the interactive (menu) entry point: it runs the shared
 # setup and then returns to the menu. The non-interactive installer path uses
-# setup_fail2ban_iplimit directly via `x-ui setup-fail2ban`.
+# setup_fail2ban_iplimit directly via `nikan-developer setup-fail2ban`.
 install_iplimit() {
     setup_fail2ban_iplimit
     before_show_menu
@@ -2524,7 +2524,7 @@ EOF
     ssh_ports=$(grep -oP '^[[:space:]]*Port[[:space:]]+\K[0-9]+' /etc/ssh/sshd_config 2>/dev/null | paste -sd, -)
     [[ -z "${ssh_ports}" ]] && ssh_ports="22"
     local panel_port
-    panel_port=$(${xui_folder}/x-ui setting -show true 2>/dev/null | grep -Eo 'port: .+' | awk '{print $2}')
+    panel_port=$(${xui_folder}/nikan-developer setting -show true 2>/dev/null | grep -Eo 'port: .+' | awk '{print $2}')
     local exempt_ports="${ssh_ports}"
     [[ -n "${panel_port}" ]] && exempt_ports="${exempt_ports},${panel_port}"
 
@@ -2607,11 +2607,11 @@ SSH_port_forwarding() {
         done
     fi
 
-    local existing_webBasePath=$(${xui_folder}/x-ui setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
-    local existing_port=$(${xui_folder}/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
-    local existing_listenIP=$(${xui_folder}/x-ui setting -getListen true | grep -Eo 'listenIP: .+' | awk '{print $2}')
-    local existing_cert=$(${xui_folder}/x-ui setting -getCert true | grep -Eo 'cert: .+' | awk '{print $2}')
-    local existing_key=$(${xui_folder}/x-ui setting -getCert true | grep -Eo 'key: .+' | awk '{print $2}')
+    local existing_webBasePath=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
+    local existing_port=$(${xui_folder}/nikan-developer setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
+    local existing_listenIP=$(${xui_folder}/nikan-developer setting -getListen true | grep -Eo 'listenIP: .+' | awk '{print $2}')
+    local existing_cert=$(${xui_folder}/nikan-developer setting -getCert true | grep -Eo 'cert: .+' | awk '{print $2}')
+    local existing_key=$(${xui_folder}/nikan-developer setting -getCert true | grep -Eo 'key: .+' | awk '{print $2}')
 
     local config_listenIP=""
     local listen_choice=""
@@ -2652,7 +2652,7 @@ SSH_port_forwarding() {
                 config_listenIP="127.0.0.1"
                 [[ "$listen_choice" == "2" ]] && read -rp "Enter custom IP to listen on: " config_listenIP
 
-                ${xui_folder}/x-ui setting -listenIP "${config_listenIP}" > /dev/null 2>&1
+                ${xui_folder}/nikan-developer setting -listenIP "${config_listenIP}" > /dev/null 2>&1
                 echo -e "${green}listen IP has been set to ${config_listenIP}.${plain}"
                 echo -e "\n${green}SSH Port Forwarding Configuration:${plain}"
                 echo -e "Standard SSH command:"
@@ -2668,7 +2668,7 @@ SSH_port_forwarding() {
             fi
             ;;
         2)
-            ${xui_folder}/x-ui setting -listenIP 0.0.0.0 > /dev/null 2>&1
+            ${xui_folder}/nikan-developer setting -listenIP 0.0.0.0 > /dev/null 2>&1
             echo -e "${green}Listen IP has been cleared.${plain}"
             restart
             ;;
@@ -2682,7 +2682,7 @@ SSH_port_forwarding() {
     esac
 }
 
-# PostgreSQL service management (for panels configured with XUI_DB_TYPE=postgres).
+# PostgreSQL service management (for panels configured with NikanDeveloper_DB_TYPE=postgres).
 
 postgresql_installed() {
     command -v pg_lsclusters > /dev/null 2>&1 || command -v psql > /dev/null 2>&1 || command -v postgres > /dev/null 2>&1
@@ -2874,7 +2874,7 @@ pg_ensure_hba_password_auth() {
     local tmp
     tmp=$(mktemp) || return 1
     {
-        echo "# Added by 3x-ui: allow password logins for the panel database."
+        echo "# Added by Nikan.Developer: allow password logins for the panel database."
         echo "host    ${pg_db}    all    127.0.0.1/32    md5"
         echo "host    ${pg_db}    all    ::1/128         md5"
         cat "${hba_file}"
@@ -3030,7 +3030,7 @@ pg_client_major() {
 # major version is at least $1 (e.g. 17); with no argument any installed version
 # is accepted. Falls back to the official PostgreSQL package repository when the
 # distribution one is too old. Restoring a panel backup made by a newer pg_dump
-# needs this:   x-ui pgclient <major>
+# needs this:   nikan-developer pgclient <major>
 pg_upgrade_client() {
     local want="$1" have
     if [[ -n "$want" && ! "$want" =~ ^[0-9]+$ ]]; then
@@ -3118,16 +3118,16 @@ pg_upgrade_client() {
     return 0
 }
 
-# Writes XUI_DB_TYPE/XUI_DB_DSN into the service env file, preserving other entries.
+# Writes NikanDeveloper_DB_TYPE/NikanDeveloper_DB_DSN into the service env file, preserving other entries.
 pg_write_env() {
     local dsn="$1" envfile
     envfile="$(xui_env_file_path)"
     install -d -m 755 "$(dirname "$envfile")"
     touch "$envfile"
-    sed -i '/^XUI_DB_TYPE=/d; /^XUI_DB_DSN=/d' "$envfile"
+    sed -i '/^NikanDeveloper_DB_TYPE=/d; /^NikanDeveloper_DB_DSN=/d' "$envfile"
     {
-        echo "XUI_DB_TYPE=postgres"
-        echo "XUI_DB_DSN=${dsn}"
+        echo "NikanDeveloper_DB_TYPE=postgres"
+        echo "NikanDeveloper_DB_DSN=${dsn}"
     } >> "$envfile"
     chmod 600 "$envfile"
 }
@@ -3154,8 +3154,8 @@ pg_install_server_action() {
 
 # Copies the current SQLite data into PostgreSQL, then switches the panel over.
 migrate_to_postgres() {
-    if [[ ! -x "${xui_folder}/x-ui" ]]; then
-        LOGE "x-ui is not installed."
+    if [[ ! -x "${xui_folder}/nikan-developer" ]]; then
+        LOGE "nikan-developer is not installed."
         return 1
     fi
     echo ""
@@ -3200,14 +3200,14 @@ migrate_to_postgres() {
 
     echo ""
     LOGI "Migrating data into PostgreSQL..."
-    if ! ${xui_folder}/x-ui migrate-db --dsn "$dsn"; then
+    if ! ${xui_folder}/nikan-developer migrate-db --dsn "$dsn"; then
         LOGE "Migration failed. The panel was NOT switched to PostgreSQL."
         start 0 > /dev/null 2>&1
         return 1
     fi
 
     pg_write_env "$dsn"
-    LOGI "Wrote database settings to $(xui_env_file_path) (XUI_DB_TYPE=postgres)."
+    LOGI "Wrote database settings to $(xui_env_file_path) (NikanDeveloper_DB_TYPE=postgres)."
     LOGI "Restarting panel on PostgreSQL..."
     restart 0
     sleep 1
@@ -3284,30 +3284,30 @@ postgresql_menu() {
 }
 
 # Convert between the panel's SQLite database and a portable .dump (SQL text)
-# file using the bundled x-ui binary. With no arguments it dumps the installed
+# file using the bundled nikan-developer binary. With no arguments it dumps the installed
 # panel database; an optional second argument overrides the output path.
-#   x-ui migrateDB [file.db|file.dump] [output]
+#   nikan-developer migrateDB [file.db|file.dump] [output]
 migrate_db() {
     local input="$1" output="$2"
-    local default_db="/etc/x-ui/x-ui.db"
-    local bin="${xui_folder}/x-ui"
+    local default_db="/etc/nikan-developer/nikan-developer.db"
+    local bin="${xui_folder}/nikan-developer"
 
     [[ -z "$input" ]] && input="$default_db"
 
     if [[ ! -x "$bin" ]]; then
-        LOGE "x-ui binary not found at ${bin}. Is the panel installed?"
+        LOGE "nikan-developer binary not found at ${bin}. Is the panel installed?"
         return 1
     fi
 
     if ! "$bin" migrate-db -h 2>&1 | grep -q -- '-dump'; then
-        LOGE "This x-ui build does not support .db <-> .dump conversion yet."
-        LOGE "Update the panel first (x-ui update) to a version with 'migrate-db --dump/--restore'."
+        LOGE "This nikan-developer build does not support .db <-> .dump conversion yet."
+        LOGE "Update the panel first (nikan-developer update) to a version with 'migrate-db --dump/--restore'."
         return 1
     fi
 
     if [[ ! -f "$input" ]]; then
         LOGE "Input file not found: ${input}"
-        echo -e "Usage: ${green}x-ui migrateDB [file.db|file.dump] [output]${plain}"
+        echo -e "Usage: ${green}nikan-developer migrateDB [file.db|file.dump] [output]${plain}"
         return 1
     fi
 
@@ -3344,8 +3344,8 @@ migrate_db() {
     else
         [[ -z "$output" ]] && output="${input%.*}.db"
         if [[ "$output" == "$default_db" ]] && check_status > /dev/null 2>&1; then
-            LOGE "Refusing to restore into the live database (${default_db}) while x-ui is running."
-            LOGE "Stop the panel first (x-ui stop) or choose a different output path."
+            LOGE "Refusing to restore into the live database (${default_db}) while nikan-developer is running."
+            LOGE "Stop the panel first (nikan-developer stop) or choose a different output path."
             return 1
         fi
         if [[ -f "$output" ]]; then
@@ -3367,7 +3367,7 @@ migrate_db() {
 # Interactive wrapper around migrate_db for the menu: prompts for the paths and
 # lets migrate_db auto-detect the direction.
 migrate_db_prompt() {
-    local default_db="/etc/x-ui/x-ui.db"
+    local default_db="/etc/nikan-developer/nikan-developer.db"
     local input output
     echo -e "Convert between a SQLite ${green}.db${plain} and a portable ${green}.dump${plain} (direction auto-detected)."
     read -rp "Input file [${default_db}]: " input
@@ -3378,34 +3378,34 @@ migrate_db_prompt() {
 
 show_usage() {
     echo -e "┌────────────────────────────────────────────────────────────────┐
-│  ${blue}x-ui control menu usages (subcommands):${plain}                       │
+│  ${blue}nikan-developer control menu usages (subcommands):${plain}                       │
 │                                                                │
-│  ${blue}x-ui${plain}                       - Admin Management Script          │
-│  ${blue}x-ui start${plain}                 - Start                            │
-│  ${blue}x-ui stop${plain}                  - Stop                             │
-│  ${blue}x-ui restart${plain}               - Restart                          │
-|  ${blue}x-ui restart-xray${plain}          - Restart Xray                     │
-│  ${blue}x-ui status${plain}                - Current Status                   │
-│  ${blue}x-ui settings${plain}              - Current Settings                 │
-│  ${blue}x-ui enable${plain}                - Enable Autostart on OS Startup   │
-│  ${blue}x-ui disable${plain}               - Disable Autostart on OS Startup  │
-│  ${blue}x-ui log${plain}                   - Check logs                       │
-│  ${blue}x-ui banlog${plain}                - Check Fail2ban ban logs          │
-│  ${blue}x-ui update${plain}                - Update                           │
-│  ${blue}x-ui update-dev${plain}            - Update to Dev channel (latest)   │
-│  ${blue}x-ui update-all-geofiles${plain}   - Update all geo files             │
-│  ${blue}x-ui migrateDB [file]${plain}      - Convert .db <-> .dump (SQLite)   │
-│  ${blue}x-ui pgclient [ver]${plain}        - Upgrade pg_dump/pg_restore tools │
-│  ${blue}x-ui legacy${plain}                - Legacy version                   │
-│  ${blue}x-ui install${plain}               - Install                          │
-│  ${blue}x-ui uninstall${plain}             - Uninstall                        │
+│  ${blue}nikan-developer${plain}                       - Admin Management Script          │
+│  ${blue}nikan-developer start${plain}                 - Start                            │
+│  ${blue}nikan-developer stop${plain}                  - Stop                             │
+│  ${blue}nikan-developer restart${plain}               - Restart                          │
+|  ${blue}nikan-developer restart-xray${plain}          - Restart Xray                     │
+│  ${blue}nikan-developer status${plain}                - Current Status                   │
+│  ${blue}nikan-developer settings${plain}              - Current Settings                 │
+│  ${blue}nikan-developer enable${plain}                - Enable Autostart on OS Startup   │
+│  ${blue}nikan-developer disable${plain}               - Disable Autostart on OS Startup  │
+│  ${blue}nikan-developer log${plain}                   - Check logs                       │
+│  ${blue}nikan-developer banlog${plain}                - Check Fail2ban ban logs          │
+│  ${blue}nikan-developer update${plain}                - Update                           │
+│  ${blue}nikan-developer update-dev${plain}            - Update to Dev channel (latest)   │
+│  ${blue}nikan-developer update-all-geofiles${plain}   - Update all geo files             │
+│  ${blue}nikan-developer migrateDB [file]${plain}      - Convert .db <-> .dump (SQLite)   │
+│  ${blue}nikan-developer pgclient [ver]${plain}        - Upgrade pg_dump/pg_restore tools │
+│  ${blue}nikan-developer legacy${plain}                - Legacy version                   │
+│  ${blue}nikan-developer install${plain}               - Install                          │
+│  ${blue}nikan-developer uninstall${plain}             - Uninstall                        │
 └────────────────────────────────────────────────────────────────┘"
 }
 
 show_menu() {
     echo -e "
 ╔────────────────────────────────────────────────╗
-│  ${green}3X-UI Panel Management Script${plain}                │
+│  ${green}Nikan.Developer Panel Management Script${plain}                │
 │  ${green}0.${plain} Exit Script                               │
 │────────────────────────────────────────────────│
 │  ${green}1.${plain} Install                                   │

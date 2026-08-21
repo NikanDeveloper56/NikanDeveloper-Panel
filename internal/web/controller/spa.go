@@ -5,21 +5,21 @@ import (
 	"path"
 	"strings"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/web/entity"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/middleware"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/session"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/entity"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/middleware"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/session"
 
 	"github.com/gin-gonic/gin"
 )
 
-// XUIController is the main controller for the X-UI panel, serving the SPA shell.
-type XUIController struct {
+// NikanDeveloperController is the main controller for the Nikan.Developer panel, serving the SPA shell.
+type NikanDeveloperController struct {
 	BaseController
 }
 
-// NewXUIController creates a new XUIController and initializes its routes.
-func NewXUIController(g *gin.RouterGroup) *XUIController {
-	a := &XUIController{}
+// NewNikanDeveloperController creates a new NikanDeveloperController and initializes its routes.
+func NewNikanDeveloperController(g *gin.RouterGroup) *NikanDeveloperController {
+	a := &NikanDeveloperController{}
 	a.initRouter(g)
 	return a
 }
@@ -30,7 +30,7 @@ func NewXUIController(g *gin.RouterGroup) *XUIController {
 // browser; React Router takes over and renders the correct page from the URL.
 // The /panel/api, /panel/setting, /panel/xray sub-routers register POST/JSON
 // endpoints on different paths and stay untouched by the shell handler.
-func (a *XUIController) initRouter(g *gin.RouterGroup) {
+func (a *NikanDeveloperController) initRouter(g *gin.RouterGroup) {
 	g = g.Group("/panel")
 	g.Use(a.checkLogin)
 	g.Use(middleware.CSRFMiddleware())
@@ -55,7 +55,7 @@ func (a *XUIController) initRouter(g *gin.RouterGroup) {
 // panelSPA serves the React SPA shell. Every GET under /panel/ that isn't an
 // API endpoint returns the same index.html — React Router reads the URL and
 // mounts the matching page on the client.
-func (a *XUIController) panelSPA(c *gin.Context) {
+func (a *NikanDeveloperController) panelSPA(c *gin.Context) {
 	serveDistPage(c, "index.html")
 }
 
@@ -63,7 +63,7 @@ func (a *XUIController) panelSPA(c *gin.Context) {
 // not explicitly registered in Gin. It intentionally runs from engine.NoRoute
 // instead of a /panel/*path wildcard so explicit JSON/API routes keep their
 // normal routing semantics.
-func (a *XUIController) HandleNoRoutePanelSPA(c *gin.Context) bool {
+func (a *NikanDeveloperController) HandleNoRoutePanelSPA(c *gin.Context) bool {
 	if !isPanelSPAFallbackRequest(c) {
 		return false
 	}
@@ -141,7 +141,7 @@ func acceptsHTML(accept string) bool {
 // csrfToken returns the session CSRF token to authenticated SPA clients.
 // The endpoint is GET (a safe method) so it bypasses CSRFMiddleware itself,
 // but checkLogin still gates the response — anonymous callers get 401/redirect.
-func (a *XUIController) csrfToken(c *gin.Context) {
+func (a *NikanDeveloperController) csrfToken(c *gin.Context) {
 	token, err := session.EnsureCSRFToken(c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, entity.Msg{Success: false, Msg: err.Error()})

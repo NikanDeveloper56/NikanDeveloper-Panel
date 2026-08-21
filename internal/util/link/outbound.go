@@ -689,7 +689,7 @@ func applyFinalMask(stream map[string]any, p url.Values) {
 }
 
 // applyHysteria2Obfs rebuilds the salamander mask from the standard Hysteria2
-// obfs=salamander & obfs-password=<pw> pair (every non-3x-ui client, and this
+// obfs=salamander & obfs-password=<pw> pair (every non-Nikan.Developer client, and this
 // panel's own generator, speak it instead of the private fm=<json> dump). A
 // salamander mask already carrying a password via fm= wins; a password-less one
 // is completed rather than left empty.

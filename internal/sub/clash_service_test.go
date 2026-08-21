@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	wgutil "github.com/mhsanaei/3x-ui/v3/internal/util/wireguard"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	wgutil "github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/wireguard"
 )
 
 func TestEnsureUniqueProxyNames(t *testing.T) {

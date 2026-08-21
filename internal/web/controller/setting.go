@@ -7,14 +7,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/crypto"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/entity"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/middleware"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service/email"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service/panel"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/session"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/crypto"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/entity"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/middleware"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service/email"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service/panel"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/session"
 
 	"github.com/gin-gonic/gin"
 )

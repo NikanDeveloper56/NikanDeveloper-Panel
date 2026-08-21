@@ -8,15 +8,15 @@ import (
 	"github.com/op/go-logging"
 	"gorm.io/gorm"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	xuilogger "github.com/mhsanaei/3x-ui/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	xuilogger "github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
 )
 
 func durablePostgresDB(t *testing.T) *gorm.DB {
 	t.Helper()
-	if os.Getenv("XUI_DB_TYPE") != "postgres" || strings.TrimSpace(os.Getenv("XUI_DB_DSN")) == "" {
-		t.Skip("set XUI_DB_TYPE=postgres and XUI_DB_DSN to run commit-failure injection")
+	if os.Getenv("NikanDeveloper_DB_TYPE") != "postgres" || strings.TrimSpace(os.Getenv("NikanDeveloper_DB_DSN")) == "" {
+		t.Skip("set NikanDeveloper_DB_TYPE=postgres and NikanDeveloper_DB_DSN to run commit-failure injection")
 	}
 	portConflictLoggerOnce.Do(func() { xuilogger.InitLogger(logging.ERROR) })
 	if err := database.InitDB(""); err != nil {

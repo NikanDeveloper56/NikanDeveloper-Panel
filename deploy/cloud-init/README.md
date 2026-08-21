@@ -1,6 +1,6 @@
-# 3x-ui via cloud-init
+# Nikan.Developer via cloud-init
 
-A single [`cloud-init.yaml`](cloud-init.yaml) user-data file that installs 3x-ui
+A single [`cloud-init.yaml`](cloud-init.yaml) user-data file that installs Nikan.Developer
 non-interactively on a fresh Ubuntu/Debian VM and generates **unique random
 credentials per instance**. It works on any cloud-init platform.
 
@@ -8,35 +8,35 @@ credentials per instance**. It works on any cloud-init platform.
 
 1. The VM boots a stock Ubuntu/Debian cloud image.
 2. cloud-init writes and runs `/opt/xui-bootstrap.sh`, which exports
-   `XUI_NONINTERACTIVE=1` and pipes the project's `install.sh` into `bash`.
+   `NikanDeveloper_NONINTERACTIVE=1` and pipes the project's `install.sh` into `bash`.
 3. `install.sh` runs end-to-end with **zero prompts**, picking secure random
    values for any credential you didn't pin.
-4. The generated credentials are written to `/etc/x-ui/install-result.env`
+4. The generated credentials are written to `/etc/nikan-developer/install-result.env`
    (mode 600), echoed to the **serial console**, and appended to `/etc/motd`.
 
 Retrieve them after boot with either:
 
 ```bash
-sudo cat /etc/x-ui/install-result.env     # over SSH
+sudo cat /etc/nikan-developer/install-result.env     # over SSH
 ```
 
 …or read the provider's **serial console** output (handy before you have SSH).
 
 ## Customising
 
-Edit the `export XUI_*` lines inside the `write_files` block of
+Edit the `export NikanDeveloper_*` lines inside the `write_files` block of
 [`cloud-init.yaml`](cloud-init.yaml). All knobs are optional; unset ⇒ random/secure default.
 
 | Env var | Default | Meaning |
 | --- | --- | --- |
-| `XUI_SSL_MODE` | `none` | `none` (plain HTTP), `ip` (Let's Encrypt IP cert), `domain` |
-| `XUI_USERNAME` | random | Admin username |
-| `XUI_PASSWORD` | random | Admin password |
-| `XUI_PANEL_PORT` | random high port | Panel listen port |
-| `XUI_WEB_BASE_PATH` | random | Panel base path (obscures the URL) |
-| `XUI_DOMAIN` | — | Required when `XUI_SSL_MODE=domain` |
-| `XUI_ACME_EMAIL` | — | Let's Encrypt account email (domain mode) |
-| `XUI_DB_TYPE` / `XUI_DB_DSN` | `sqlite` | Set `postgres` + DSN to use PostgreSQL |
+| `NikanDeveloper_SSL_MODE` | `none` | `none` (plain HTTP), `ip` (Let's Encrypt IP cert), `domain` |
+| `NikanDeveloper_USERNAME` | random | Admin username |
+| `NikanDeveloper_PASSWORD` | random | Admin password |
+| `NikanDeveloper_PANEL_PORT` | random high port | Panel listen port |
+| `NikanDeveloper_WEB_BASE_PATH` | random | Panel base path (obscures the URL) |
+| `NikanDeveloper_DOMAIN` | — | Required when `NikanDeveloper_SSL_MODE=domain` |
+| `NikanDeveloper_ACME_EMAIL` | — | Let's Encrypt account email (domain mode) |
+| `NikanDeveloper_DB_TYPE` / `NikanDeveloper_DB_DSN` | `sqlite` | Set `postgres` + DSN to use PostgreSQL |
 
 > **TLS note:** `none` serves the panel over plain HTTP on a random high port —
 > fine behind a reverse proxy or an SSH tunnel, but put TLS in front of it before

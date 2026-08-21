@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/common"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
 )
 
 type NordService struct {

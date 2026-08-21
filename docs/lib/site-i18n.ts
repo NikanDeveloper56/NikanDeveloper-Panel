@@ -6,7 +6,7 @@ import type { Locale } from './i18n';
 // can't live in MDX. English is the source; fa/ru/zh fall back to en.
 //
 // Convention matches the docs: translate prose only — product/protocol names
-// (3x-ui, Xray, VLESS, REALITY, x25519, Docker, REST API, …) stay in Latin.
+// (Nikan.Developer, Xray, VLESS, REALITY, x25519, Docker, REST API, …) stay in Latin.
 export interface SiteMessages {
   tagline: string;
   getStarted: string;

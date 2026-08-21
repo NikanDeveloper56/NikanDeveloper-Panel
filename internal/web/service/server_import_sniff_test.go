@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
 )
 
 func TestSniffImportKind(t *testing.T) {
@@ -29,7 +29,7 @@ func TestSniffImportKind(t *testing.T) {
 	}
 
 	t.Run("panel migration dump", func(t *testing.T) {
-		dbPath := filepath.Join(t.TempDir(), "x-ui.db")
+		dbPath := filepath.Join(t.TempDir(), "nikan-developer.db")
 		if err := database.InitDB(dbPath); err != nil {
 			t.Fatalf("InitDB: %v", err)
 		}

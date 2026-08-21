@@ -15,7 +15,7 @@ func TestRefreshVersionTimesOut(t *testing.T) {
 	}
 
 	dir := t.TempDir()
-	t.Setenv("XUI_BIN_FOLDER", dir)
+	t.Setenv("NikanDeveloper_BIN_FOLDER", dir)
 	binaryPath := filepath.Join(dir, GetBinaryName())
 	if err := os.WriteFile(binaryPath, []byte("#!/bin/sh\nexec sleep 1\n"), 0o700); err != nil {
 		t.Fatalf("write xray fixture: %v", err)

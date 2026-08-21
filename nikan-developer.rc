@@ -1,0 +1,18 @@
+#!/sbin/openrc-run
+
+command="/usr/local/nikan-developer/nikan-developer"
+command_background=true
+pidfile="/run/nikan-developer.pid"
+description="nikan-developer Service"
+procname="nikan-developer"
+depend() {
+    need net
+}
+start_pre(){
+    cd /usr/local/nikan-developer
+}
+reload() {
+  ebegin "Reloading ${RC_SVCNAME}"
+  kill -USR1 $(cat $pidfile)
+  eend $?
+}

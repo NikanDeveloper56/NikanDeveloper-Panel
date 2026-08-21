@@ -51,7 +51,7 @@ func installFakeMtg(t *testing.T) string {
 		t.Fatalf("install fake mtg: %v", err)
 	}
 	pidFile := filepath.Join(binDir, "mtg-pids.txt")
-	t.Setenv("XUI_BIN_FOLDER", binDir)
+	t.Setenv("NikanDeveloper_BIN_FOLDER", binDir)
 	t.Setenv("MTG_FAKE_CHILD", "1")
 	t.Setenv("MTG_FAKE_PIDFILE", pidFile)
 	return pidFile

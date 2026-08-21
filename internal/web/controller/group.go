@@ -3,8 +3,8 @@ package controller
 import (
 	"strings"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/common"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
 
 	"github.com/gin-gonic/gin"
 )

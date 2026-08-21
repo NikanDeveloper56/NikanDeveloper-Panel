@@ -10,7 +10,7 @@ import (
 func writeLogConfig(t *testing.T, accessPath string, errorPath string) {
 	t.Helper()
 	binDir := t.TempDir()
-	t.Setenv("XUI_BIN_FOLDER", binDir)
+	t.Setenv("NikanDeveloper_BIN_FOLDER", binDir)
 	configData, err := json.Marshal(map[string]any{
 		"log": map[string]any{"access": accessPath, "error": errorPath},
 	})

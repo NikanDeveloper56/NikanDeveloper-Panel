@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
 )
 
 func hostColumns() []string {
@@ -38,7 +38,7 @@ func assertHostSchema(t *testing.T) {
 // TestHostAutoMigrateCreatesColumns verifies the hosts table and every expected
 // column exist after initModels (SQLite).
 func TestHostAutoMigrateCreatesColumns(t *testing.T) {
-	if err := InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	if err := InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = CloseDB() })
@@ -47,8 +47,8 @@ func TestHostAutoMigrateCreatesColumns(t *testing.T) {
 
 // TestHostAutoMigrateCreatesColumns_Postgres is the dual-driver counterpart.
 func TestHostAutoMigrateCreatesColumns_Postgres(t *testing.T) {
-	if strings.TrimSpace(os.Getenv("XUI_DB_DSN")) == "" || os.Getenv("XUI_DB_TYPE") != "postgres" {
-		t.Skip("set XUI_DB_TYPE=postgres and XUI_DB_DSN to run the postgres schema test")
+	if strings.TrimSpace(os.Getenv("NikanDeveloper_DB_DSN")) == "" || os.Getenv("NikanDeveloper_DB_TYPE") != "postgres" {
+		t.Skip("set NikanDeveloper_DB_TYPE=postgres and NikanDeveloper_DB_DSN to run the postgres schema test")
 	}
 	if err := InitDB(""); err != nil {
 		t.Fatalf("InitDB: %v", err)
@@ -60,7 +60,7 @@ func TestHostAutoMigrateCreatesColumns_Postgres(t *testing.T) {
 // TestPruneOrphanedHosts verifies a host whose inbound_id has no matching inbound
 // is removed by the prune step.
 func TestPruneOrphanedHosts(t *testing.T) {
-	if err := InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	if err := InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = CloseDB() })

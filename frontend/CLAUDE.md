@@ -68,5 +68,5 @@ Only standalone bundles (login/subpage) need a new `.html` + `src/entries/*` +
   compile-checks every story). Reusable `src/components/` get a co-located
   `<Component>.stories.tsx` with `tags: ['autodocs']`; document props via
   `argTypes` / `parameters.docs` string metadata, never JSDoc.
-- After `npm run build`, RESTART `go run .` (see the XUI_DEBUG gotcha in root
+- After `npm run build`, RESTART `go run .` (see the NikanDeveloper_DEBUG gotcha in root
   CLAUDE.md) before checking the panel.

@@ -16,9 +16,9 @@ import (
 	xraygeodata "github.com/xtls/xray-core/common/geodata"
 	"google.golang.org/protobuf/proto"
 
-	xuilogger "github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray/geodata"
+	xuilogger "github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray/geodata"
 )
 
 func newGeodataEngine(t *testing.T) *gin.Engine {
@@ -27,7 +27,7 @@ func newGeodataEngine(t *testing.T) *gin.Engine {
 	gin.SetMode(gin.TestMode)
 
 	dir := t.TempDir()
-	t.Setenv("XUI_BIN_FOLDER", dir)
+	t.Setenv("NikanDeveloper_BIN_FOLDER", dir)
 	writeGeositeDB(t, dir)
 	writeGeoipDB(t, dir)
 
@@ -162,7 +162,7 @@ func TestGeodataRejectsBadRequests(t *testing.T) {
 		{name: "missing code", path: "/panel/api/xray/geodata/entries?file=geosite.dat"},
 		{name: "unknown category", path: "/panel/api/xray/geodata/entries?file=geosite.dat&code=nope"},
 		{name: "path traversal", path: "/panel/api/xray/geodata/categories?file=../../etc/passwd.dat"},
-		{name: "non dat file", path: "/panel/api/xray/geodata/categories?file=x-ui.db"},
+		{name: "non dat file", path: "/panel/api/xray/geodata/categories?file=nikan-developer.db"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

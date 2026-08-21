@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/netproxy"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/netproxy"
 )
 
 const (
@@ -62,26 +62,26 @@ func DefaultConfig() Config {
 	}
 }
 
-// ConfigFromEnv builds Config from XUI_TUNNEL_HEALTH_* environment variables.
+// ConfigFromEnv builds Config from NikanDeveloper_TUNNEL_HEALTH_* environment variables.
 //
 // Supported variables:
-//   - XUI_TUNNEL_HEALTH_MONITOR=true
-//   - XUI_TUNNEL_HEALTH_URL=https://www.cloudflare.com/cdn-cgi/trace
-//   - XUI_TUNNEL_HEALTH_PROXY=socks5://127.0.0.1:1080
-//   - XUI_TUNNEL_HEALTH_INTERVAL=30s
-//   - XUI_TUNNEL_HEALTH_TIMEOUT=10s
-//   - XUI_TUNNEL_HEALTH_FAILURES=3
-//   - XUI_TUNNEL_HEALTH_COOLDOWN=5m
+//   - NikanDeveloper_TUNNEL_HEALTH_MONITOR=true
+//   - NikanDeveloper_TUNNEL_HEALTH_URL=https://www.cloudflare.com/cdn-cgi/trace
+//   - NikanDeveloper_TUNNEL_HEALTH_PROXY=socks5://127.0.0.1:1080
+//   - NikanDeveloper_TUNNEL_HEALTH_INTERVAL=30s
+//   - NikanDeveloper_TUNNEL_HEALTH_TIMEOUT=10s
+//   - NikanDeveloper_TUNNEL_HEALTH_FAILURES=3
+//   - NikanDeveloper_TUNNEL_HEALTH_COOLDOWN=5m
 func ConfigFromEnv() Config {
 	cfg := DefaultConfig()
 
-	cfg.Enabled = parseBool(os.Getenv("XUI_TUNNEL_HEALTH_MONITOR"))
-	cfg.URL = firstNonEmpty(os.Getenv("XUI_TUNNEL_HEALTH_URL"), cfg.URL)
-	cfg.ProxyURL = strings.TrimSpace(os.Getenv("XUI_TUNNEL_HEALTH_PROXY"))
-	cfg.Interval = parseDurationEnv("XUI_TUNNEL_HEALTH_INTERVAL", cfg.Interval)
-	cfg.Timeout = parseDurationEnv("XUI_TUNNEL_HEALTH_TIMEOUT", cfg.Timeout)
-	cfg.Cooldown = parseDurationEnv("XUI_TUNNEL_HEALTH_COOLDOWN", cfg.Cooldown)
-	cfg.FailureThreshold = parseIntEnv("XUI_TUNNEL_HEALTH_FAILURES", cfg.FailureThreshold)
+	cfg.Enabled = parseBool(os.Getenv("NikanDeveloper_TUNNEL_HEALTH_MONITOR"))
+	cfg.URL = firstNonEmpty(os.Getenv("NikanDeveloper_TUNNEL_HEALTH_URL"), cfg.URL)
+	cfg.ProxyURL = strings.TrimSpace(os.Getenv("NikanDeveloper_TUNNEL_HEALTH_PROXY"))
+	cfg.Interval = parseDurationEnv("NikanDeveloper_TUNNEL_HEALTH_INTERVAL", cfg.Interval)
+	cfg.Timeout = parseDurationEnv("NikanDeveloper_TUNNEL_HEALTH_TIMEOUT", cfg.Timeout)
+	cfg.Cooldown = parseDurationEnv("NikanDeveloper_TUNNEL_HEALTH_COOLDOWN", cfg.Cooldown)
+	cfg.FailureThreshold = parseIntEnv("NikanDeveloper_TUNNEL_HEALTH_FAILURES", cfg.FailureThreshold)
 
 	return cfg.Normalize()
 }

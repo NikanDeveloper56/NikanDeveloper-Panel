@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray"
 )
 
 // TestAddClientTraffic_MatchesByEmail covers two scenarios that share one fix:
@@ -25,8 +25,8 @@ import (
 // Both must have their local traffic counted.
 func TestAddClientTraffic_MatchesByEmail(t *testing.T) {
 	dbDir := t.TempDir()
-	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", dbDir)
+	if err := database.InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })
@@ -96,8 +96,8 @@ func TestAddClientTraffic_MatchesByEmail(t *testing.T) {
 // owning inbound via the client_inbounds link instead.
 func TestAdjustTraffics_DelayedStartConvertsDespiteStaleInboundId(t *testing.T) {
 	dbDir := t.TempDir()
-	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", dbDir)
+	if err := database.InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })
@@ -165,8 +165,8 @@ func TestAdjustTraffics_DelayedStartConvertsDespiteStaleInboundId(t *testing.T) 
 // Before the fix every polled row got its own no-op expiry UPDATE.
 func TestAddClientTraffic_ExpiryWriteOnlyForConvertedClients(t *testing.T) {
 	dbDir := t.TempDir()
-	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", dbDir)
+	if err := database.InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })

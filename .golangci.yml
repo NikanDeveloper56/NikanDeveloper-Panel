@@ -46,7 +46,7 @@ formatters:
   settings:
     goimports:
       local-prefixes:
-        - github.com/mhsanaei/3x-ui
+        - github.com/nikandeveloper56/Nikan.Developer
   exclusions:
     paths:
       - frontend

@@ -9,25 +9,25 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/config"
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	xuilogger "github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/config"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	xuilogger "github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray"
 
 	"github.com/op/go-logging"
 	"gorm.io/gorm"
 )
 
 // setupScaleDB initializes the DB for a scale benchmark on either Postgres
-// (XUI_DB_TYPE=postgres + XUI_DB_DSN) or SQLite (XUI_SCALE_TEST=1, temp file;
-// XUI_SCALE_DB_PATH persists the DB for manual smoke runs), and registers
+// (NikanDeveloper_DB_TYPE=postgres + NikanDeveloper_DB_DSN) or SQLite (NikanDeveloper_SCALE_TEST=1, temp file;
+// NikanDeveloper_SCALE_DB_PATH persists the DB for manual smoke runs), and registers
 // cleanup. Skips the test when neither backend is configured.
 func setupScaleDB(t *testing.T) {
 	t.Helper()
 	xuilogger.InitLogger(logging.ERROR)
 
-	if os.Getenv("XUI_DB_TYPE") == "postgres" && strings.TrimSpace(os.Getenv("XUI_DB_DSN")) != "" {
+	if os.Getenv("NikanDeveloper_DB_TYPE") == "postgres" && strings.TrimSpace(os.Getenv("NikanDeveloper_DB_DSN")) != "" {
 		if err := database.InitDB(""); err != nil {
 			t.Fatalf("InitDB(postgres): %v", err)
 		}
@@ -35,9 +35,9 @@ func setupScaleDB(t *testing.T) {
 		return
 	}
 
-	switch strings.ToLower(strings.TrimSpace(os.Getenv("XUI_SCALE_TEST"))) {
+	switch strings.ToLower(strings.TrimSpace(os.Getenv("NikanDeveloper_SCALE_TEST"))) {
 	case "1", "true", "yes":
-		dbPath := strings.TrimSpace(os.Getenv("XUI_SCALE_DB_PATH"))
+		dbPath := strings.TrimSpace(os.Getenv("NikanDeveloper_SCALE_DB_PATH"))
 		if dbPath == "" {
 			dbPath = filepath.Join(t.TempDir(), "scale.db")
 		}
@@ -48,14 +48,14 @@ func setupScaleDB(t *testing.T) {
 		return
 	}
 
-	t.Skip("set XUI_SCALE_TEST=1 (sqlite) or XUI_DB_TYPE=postgres + XUI_DB_DSN (postgres) to run the scale benchmark")
+	t.Skip("set NikanDeveloper_SCALE_TEST=1 (sqlite) or NikanDeveloper_DB_TYPE=postgres + NikanDeveloper_DB_DSN (postgres) to run the scale benchmark")
 }
 
-// scaleSizes returns the default size ladder unless XUI_SCALE_SIZES overrides
+// scaleSizes returns the default size ladder unless NikanDeveloper_SCALE_SIZES overrides
 // it with a comma-separated list (e.g. "500000" or "10000,100000,500000").
 func scaleSizes(t *testing.T, def ...int) []int {
 	t.Helper()
-	raw := strings.TrimSpace(os.Getenv("XUI_SCALE_SIZES"))
+	raw := strings.TrimSpace(os.Getenv("NikanDeveloper_SCALE_SIZES"))
 	if raw == "" {
 		return def
 	}
@@ -67,7 +67,7 @@ func scaleSizes(t *testing.T, def ...int) []int {
 		}
 		n, err := strconv.Atoi(part)
 		if err != nil || n <= 0 {
-			t.Fatalf("XUI_SCALE_SIZES: invalid size %q", part)
+			t.Fatalf("NikanDeveloper_SCALE_SIZES: invalid size %q", part)
 		}
 		out = append(out, n)
 	}

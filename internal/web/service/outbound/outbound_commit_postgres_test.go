@@ -7,13 +7,13 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray"
 )
 
 func TestAddTrafficReturnsDeferredCommitFailure(t *testing.T) {
-	if os.Getenv("XUI_DB_TYPE") != "postgres" || strings.TrimSpace(os.Getenv("XUI_DB_DSN")) == "" {
-		t.Skip("set XUI_DB_TYPE=postgres and XUI_DB_DSN to run commit-failure injection")
+	if os.Getenv("NikanDeveloper_DB_TYPE") != "postgres" || strings.TrimSpace(os.Getenv("NikanDeveloper_DB_DSN")) == "" {
+		t.Skip("set NikanDeveloper_DB_TYPE=postgres and NikanDeveloper_DB_DSN to run commit-failure injection")
 	}
 	if err := database.InitDB(""); err != nil {
 		t.Fatalf("InitDB: %v", err)

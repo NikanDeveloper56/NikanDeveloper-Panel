@@ -27,7 +27,7 @@ COPY --from=frontend /src/internal/web/dist ./internal/web/dist
 
 ENV CGO_ENABLED=1
 ENV CGO_CFLAGS="-D_LARGEFILE64_SOURCE"
-RUN go build -ldflags "-w -s" -o build/x-ui main.go
+RUN go build -ldflags "-w -s" -o build/nikan-developer main.go
 RUN ./DockerInit.sh "$TARGETARCH"
 
 # ========================================================
@@ -47,7 +47,7 @@ RUN apk add --no-cache --update \
 
 COPY --from=builder /app/build/ /app/
 COPY --from=builder /app/DockerEntrypoint.sh /app/
-COPY --from=builder /app/x-ui.sh /usr/bin/x-ui
+COPY --from=builder /app/nikan-developer.sh /usr/bin/nikan-developer
 COPY --from=builder /app/internal/web/translation /app/internal/web/translation
 
 
@@ -60,7 +60,7 @@ RUN rm -f /etc/fail2ban/jail.d/alpine-ssh.conf \
 
 RUN chmod +x \
   /app/DockerEntrypoint.sh \
-  /app/x-ui \
+  /app/nikan-developer \
   /usr/bin/x-ui
 
 ENV XUI_IN_DOCKER="true"
@@ -68,7 +68,7 @@ ENV XUI_MAIN_FOLDER="/app"
 ENV XUI_ENABLE_FAIL2BAN="true"
 ENV XUI_DB_TYPE=""
 ENV XUI_DB_DSN=""
-EXPOSE 2053
-VOLUME [ "/etc/x-ui" ]
-CMD [ "./x-ui" ]
+EXPOSE 8080
+VOLUME [ "/etc/nikan-developer" ]
+CMD [ "./nikan-developer" ]
 ENTRYPOINT [ "/app/DockerEntrypoint.sh" ]

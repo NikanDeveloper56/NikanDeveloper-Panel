@@ -1,9 +1,9 @@
-# 3x-ui — Architecture & Code Map
+# Nikan.Developer — Architecture & Code Map
 
 > Navigation map for contributors and AI coding agents (referenced from `CLAUDE.md`).
 > Goal: jump to the right file in one hop instead of grepping the whole tree.
 > Tracks the `main` branch — paths reflect the latest changes, so verify against the live
-> tree rather than a pinned release (Go module `github.com/mhsanaei/3x-ui/v3`).
+> tree rather than a pinned release (Go module `github.com/nikandeveloper56/Nikan.Developer/v3`).
 >
 > **How to use this file:** read "Mental model" + "Request lifecycle" first, then
 > use the **Symptom → File index** to locate work. Respect the **Layering rules**
@@ -13,14 +13,14 @@
 
 ## 1. Mental model (the 30-second version)
 
-3x-ui is a **web control panel for [Xray-core](https://github.com/XTLS/Xray-core)**. The Go
+Nikan.Developer is a **web control panel for [Xray-core](https://github.com/XTLS/Xray-core)**. The Go
 backend is the source of truth: it stores inbounds/clients/settings in a DB, renders an
 Xray JSON config from that state, supervises the Xray child process, and exposes a REST +
 WebSocket API. A React SPA (built by Vite, embedded into the Go binary) is the UI. A second,
 separate HTTP server serves **subscription links** to end users.
 
 The panel supervises **two managed child processes**: Xray-core itself and — when MTProto
-inbounds exist — the `mtg-multi` Telegram-proxy binary (`github.com/mhsanaei/mtg-multi`, a
+inbounds exist — the `mtg-multi` Telegram-proxy binary (`github.com/nikandeveloper56/mtg-multi`, a
 multi-secret fork built from source; `internal/mtproto/`). One process per inbound serves
 every attached client's FakeTLS secret through the fork's `[secrets]` section, plus optional
 per-client sponsored-channel ad-tags via `[secret-ad-tags]`. A client or ad-tag edit is
@@ -41,7 +41,7 @@ Two key ideas that explain most of the complexity:
 1. **The DB → Xray config pipeline.** Inbounds/clients live in the DB. On every change the
    backend regenerates the Xray config and applies it — preferring a _hot diff_ (live gRPC
    API mutation) over a full process restart. See §5.1.
-2. **The Runtime abstraction (multi-node).** A panel can manage remote "nodes" (other 3x-ui
+2. **The Runtime abstraction (multi-node).** A panel can manage remote "nodes" (other Nikan.Developer
    instances). Every state-changing inbound/client operation is dispatched through a
    `runtime.Runtime` interface that is either **`Local`** (this box's Xray gRPC API) or
    **`Remote`** (HTTPS call to a child node, with `verify`/`skip`/`pin`/`mtls` TLS modes).
@@ -54,7 +54,7 @@ Two key ideas that explain most of the complexity:
 **Backend (Go 1.26):**
 
 - Web framework: **Gin** (`gin-gonic/gin`) + sessions (cookie store), gzip.
-- ORM: **GORM** with **SQLite** (default) or **PostgreSQL** (`XUI_DB_TYPE=postgres`).
+- ORM: **GORM** with **SQLite** (default) or **PostgreSQL** (`NikanDeveloper_DB_TYPE=postgres`).
 - Scheduler: **robfig/cron/v3** (seconds-precision) for all background jobs.
 - Xray: **xtls/xray-core** vendored as a library; the panel talks to the running core over
   its **gRPC API** and also shells out to manage the process.
@@ -85,7 +85,7 @@ Browser (React, fetch)
   → POST {basePath}/panel/api/...
     → Gin engine (internal/web/web.go: initRouter)
       → middleware chain: SecurityHeaders → MaxBodyBytes (10 MiB; importDB exempt)
-                          → [DomainValidator, if webDomain set] → gzip → sessions("3x-ui")
+                          → [DomainValidator, if webDomain set] → gzip → sessions("Nikan.Developer")
                           → base-path/cache-control context → Localizer
                           → API routes add: ConfigEnvelope (zstd + SHA-256) → CSRF
         → Controller (internal/web/controller/*.go)   // HTTP concerns only: bind, validate, respond
@@ -120,14 +120,14 @@ node heartbeat every 5s, periodic traffic resets (hourly/daily/weekly/monthly). 
 ## 4. Directory map (what lives where)
 
 ```
-3x-ui/
+Nikan.Developer/
 ├── main.go                     # Entry point: CLI (run / migrate / migrate-db / setting / cert),
 │                               #   bootstrap, signal handling, restart loop
 ├── go.mod / go.sum             # Go deps (module path ends in /v3)
 │
 ├── internal/                   # ALL backend Go code (private packages)
 │   ├── config/                 # Env-var config: paths, DB kind/DSN, log level, version
-│   │                           #   Every XUI_* env var is read here (config.go)
+│   │                           #   Every NikanDeveloper_* env var is read here (config.go)
 │   ├── database/
 │   │   ├── db.go               # InitDB: connect, AutoMigrate, seeders (~1.4k lines). DB hotspot.
 │   │   ├── migrate_data.go     # Data migrations (seeders/normalizers beyond AutoMigrate)
@@ -138,7 +138,7 @@ node heartbeat every 5s, periodic traffic resets (hourly/daily/weekly/monthly). 
 │   │                           #   client_global_traffic.go). ⭐ Start here for data shape.
 │   ├── eventbus/               # In-process pub/sub (buffered channel): outbound.down|up,
 │   │                           #   xray.crash, node.down|up, cpu.high, memory.high, login.attempt
-│   ├── tunnelmonitor/          # Optional tunnel health probe (XUI_TUNNEL_HEALTH_* env vars):
+│   ├── tunnelmonitor/          # Optional tunnel health probe (NikanDeveloper_TUNNEL_HEALTH_* env vars):
 │   │                           #   HTTP probe (default Cloudflare trace); repeated failures
 │   │                           #   trigger an Xray restart hook. Independent of panel settings.
 │   ├── xray/                   # Xray-core integration (the proxy engine wrapper)
@@ -280,8 +280,8 @@ node heartbeat every 5s, periodic traffic resets (hourly/daily/weekly/monthly). 
 ├── media/                    # README images
 │
 ├── Dockerfile / docker-compose.yml / DockerEntrypoint.sh / DockerInit.sh   # Container build/run
-├── install.sh / update.sh / x-ui.sh                        # VPS install + management CLI
-├── x-ui.service.*  / x-ui.rc                               # systemd units (debian/rhel/arch) + rc script
+├── install.sh / update.sh / nikan-developer.sh                        # VPS install + management CLI
+├── nikan-developer.service.*  / nikan-developer.rc                               # systemd units (debian/rhel/arch) + rc script
 ├── windows_files/                                          # Windows service support
 └── .github/workflows/        # CI: ci.yml, codeql.yml, docker.yml, release.yml, smoke.yml,
                               #     mutation.yml, cleanup_caches.yml, claude-bot.yml
@@ -313,7 +313,7 @@ Restart is debounced via an atomic "need restart" flag (`SetToNeedRestart` /
 
 ### 5.2 Runtime abstraction — Local vs Remote (multi-node) ⭐ most important
 
-A "node" (`model.Node`) is another 3x-ui instance this panel controls. Every state-changing
+A "node" (`model.Node`) is another Nikan.Developer instance this panel controls. Every state-changing
 inbound/client operation goes through the `runtime.Runtime` interface so the _same service
 code_ works whether the target is the local Xray or a remote node.
 
@@ -429,7 +429,7 @@ notifications instead of importing notification services into producers.
 ### 5.8 Tunnel health monitor
 
 `internal/tunnelmonitor/` is an optional watchdog configured **only via env vars**
-(`XUI_TUNNEL_HEALTH_*`, read in `internal/config/`), deliberately independent of panel
+(`NikanDeveloper_TUNNEL_HEALTH_*`, read in `internal/config/`), deliberately independent of panel
 settings so it can be enabled from a systemd `EnvironmentFile` even when the panel is
 unreachable. It periodically probes an HTTP URL (default: Cloudflare trace endpoint) through
 the tunnel; after N successive failures (default 3) it fires a recovery callback wired to an
@@ -496,7 +496,7 @@ for AutoMigrate in `internal/database/db.go`.
 | **Telegram bot** commands                                                         | `service/tgbot/`                                                             | `job/stats_notify_job.go`                                                                           |
 | **Email notifications**                                                           | `service/email/`                                                             | `internal/eventbus/` (consumers)                                                                    |
 | **CPU / memory alerts** not firing                                                | `job/check_cpu_usage.go`, `job/check_memory_usage.go`                        | `internal/eventbus/`, notifier settings in `service/setting.go`                                     |
-| Xray auto-restart on **dead tunnel**                                              | `internal/tunnelmonitor/`                                                    | `XUI_TUNNEL_HEALTH_*` in `internal/config/`                                                         |
+| Xray auto-restart on **dead tunnel**                                              | `internal/tunnelmonitor/`                                                    | `NikanDeveloper_TUNNEL_HEALTH_*` in `internal/config/`                                                         |
 | **WARP / Nord** outbound integration                                              | `service/integration/warp.go` / `nord.go`                                    | `service/outbound_subscription.go`                                                                  |
 | **MTProto** proxy issues                                                          | `internal/mtproto/manager.go`, `mtproto/process*.go`                         | `job/mtproto_job.go`                                                                                |
 | **DB migration** / new column                                                     | `internal/database/db.go` (AutoMigrate list), `migrate_data.go`              | `model/model.go`                                                                                    |
@@ -577,9 +577,9 @@ root → `go build ./...` / `go run main.go`.
 
 ## 10. Gotchas & conventions
 
-- **Module path is `.../v3`.** Internal imports use `github.com/mhsanaei/3x-ui/v3/internal/...`.
-- **SQLite vs Postgres.** Default is SQLite at `{XUI_DB_FOLDER}/x-ui.db`. Postgres via
-  `XUI_DB_TYPE=postgres` + `XUI_DB_DSN`. Some SQL paths are dialect-aware (`database/dialect.go`);
+- **Module path is `.../v3`.** Internal imports use `github.com/nikandeveloper56/Nikan.Developer/v3/internal/...`.
+- **SQLite vs Postgres.** Default is SQLite at `{NikanDeveloper_DB_FOLDER}/nikan-developer.db`. Postgres via
+  `NikanDeveloper_DB_TYPE=postgres` + `NikanDeveloper_DB_DSN`. Some SQL paths are dialect-aware (`database/dialect.go`);
   test both when touching raw queries (there are `*_scale_postgres_test.go` suites).
 - **`Inbound.Settings` / `StreamSettings` / `Sniffing` are raw JSON strings**, not structured
   columns. Parsing/validation happens in services and the `xray` package, not in GORM.

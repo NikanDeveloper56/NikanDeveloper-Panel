@@ -22,8 +22,8 @@ func TestSanitizeBackupHost(t *testing.T) {
 		{"ipv6 bracketed", "[fe80::1]", "fe80--1"},
 		{"domain with port", "example.com:8443", "example.com-8443"},
 		{"trims edge dots and dashes", "-.example.com.-", "example.com"},
-		{"empty falls back", "", "x-ui"},
-		{"all invalid falls back", ":::", "x-ui"},
+		{"empty falls back", "", "nikan-developer"},
+		{"all invalid falls back", ":::", "nikan-developer"},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {

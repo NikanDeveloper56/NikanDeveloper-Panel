@@ -259,7 +259,7 @@ function ensureFinalMask(stream: Raw): Raw {
 }
 
 // Rebuild the salamander mask from the standard Hysteria2 obfs pair (every
-// non-3x-ui client, and this panel's own generator, speak it instead of the
+// non-Nikan.Developer client, and this panel's own generator, speak it instead of the
 // private fm=<json> dump). A salamander mask already carrying a password via fm=
 // wins; a password-less one is completed rather than left empty.
 function applyHysteria2Obfs(stream: Raw, params: URLSearchParams): void {

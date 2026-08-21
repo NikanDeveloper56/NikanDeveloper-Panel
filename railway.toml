@@ -3,8 +3,11 @@ builder = "dockerfile"
 dockerfile = "Dockerfile"
 
 [deploy]
-startCommand = "/app/x-ui"
+startCommand = "/app/nikan-developer"
 healthcheckPath = "/login"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
+
+[[env]]
+XUI_PORT = "{{ PORT }}"

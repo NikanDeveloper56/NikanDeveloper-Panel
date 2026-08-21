@@ -14,7 +14,7 @@ import (
 
 	"github.com/op/go-logging"
 
-	xuilogger "github.com/mhsanaei/3x-ui/v3/internal/logger"
+	xuilogger "github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
 )
 
 func TestWriteFileAtomicModeAndRenameFailure(t *testing.T) {
@@ -120,7 +120,7 @@ func TestStopKillsProcessThatIgnoresSIGTERM(t *testing.T) {
 
 func initProcessTestLogger(t *testing.T) {
 	t.Helper()
-	t.Setenv("XUI_LOG_FOLDER", t.TempDir())
+	t.Setenv("NikanDeveloper_LOG_FOLDER", t.TempDir())
 	xuilogger.InitLogger(logging.ERROR)
 }
 

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -28,8 +28,8 @@ func TestPrepareSQLiteForMigration(t *testing.T) {
 		if err == nil {
 			t.Fatal("PrepareSQLiteForMigration accepted a non-panel database, want error")
 		}
-		if !strings.Contains(err.Error(), "not a 3x-ui panel database") {
-			t.Fatalf("error = %q, want it to contain %q", err.Error(), "not a 3x-ui panel database")
+		if !strings.Contains(err.Error(), "not a Nikan.Developer panel database") {
+			t.Fatalf("error = %q, want it to contain %q", err.Error(), "not a Nikan.Developer panel database")
 		}
 	})
 

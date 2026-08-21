@@ -5,11 +5,11 @@
 Do not open a public issue for anything you believe is exploitable — an
 authentication bypass, remote code execution, injection, secret or
 credential exposure, privilege escalation. A public report gives attackers
-a head start against every 3x-ui deployment.
+a head start against every Nikan.Developer deployment.
 
 Instead, use GitHub's private vulnerability reporting: open this
 repository's **Security** tab and click **Report a vulnerability**. Include
-the affected 3x-ui version, reproduction steps, and the impact you see.
+the affected Nikan.Developer version, reproduction steps, and the impact you see.
 You will receive replies in the advisory thread.
 
 There is no bug-bounty program. Fixes ship in the next release, and the

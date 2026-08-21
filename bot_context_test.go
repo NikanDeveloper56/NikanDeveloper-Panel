@@ -125,7 +125,7 @@ func TestBotContextSkipGatesExist(t *testing.T) {
 	table := section(t, doc, "**What CI does NOT prove.**", "Mutation testing")
 	// [A-Z0-9_] and not [A-Z_]: XRAY_E2E_BINARY carries a digit, and excluding it
 	// silently dropped that gate from the check instead of failing.
-	gates := regexp.MustCompile("`((?:XUI|XRAY)_[A-Z0-9_]+)`").FindAllStringSubmatch(table, -1)
+	gates := regexp.MustCompile("`((?:NikanDeveloper|XRAY)_[A-Z0-9_]+)`").FindAllStringSubmatch(table, -1)
 	if len(gates) < 5 {
 		t.Fatalf("expected at least 5 skip-gate variables in %s, found %d", botContextPath, len(gates))
 	}
@@ -171,7 +171,7 @@ func TestReviewNamesRealCIJobsAndGates(t *testing.T) {
 			}
 		})
 	}
-	for _, g := range regexp.MustCompile("`((?:XUI|XRAY)_[A-Z0-9_]+)`").FindAllStringSubmatch(doc, -1) {
+	for _, g := range regexp.MustCompile("`((?:NikanDeveloper|XRAY)_[A-Z0-9_]+)`").FindAllStringSubmatch(doc, -1) {
 		t.Run(g[1], func(t *testing.T) {
 			if strings.Contains(ci, g[1]) {
 				t.Errorf("%s claims %s is never set in CI, but %s sets it", reviewPath, g[1], ciWorkflowPath)

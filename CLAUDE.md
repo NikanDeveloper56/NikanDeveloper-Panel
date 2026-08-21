@@ -8,7 +8,7 @@ index, layering rules), read `docs/architecture.md` on demand — do not guess
 file locations when it can answer in one hop.
 
 ## Stack
-- Backend: Go 1.26 (`module github.com/mhsanaei/3x-ui/v3`), Gin, GORM.
+- Backend: Go 1.26 (`module github.com/nikandeveloper56/Nikan.Developer/v3`), Gin, GORM.
   Runs Xray-core as a managed child process (`internal/xray/process.go`) and
   imports `github.com/xtls/xray-core` for config types + gRPC stats/handler/router
   API. MTProto inbounds run a second managed child — the `mtg-multi` binary
@@ -24,16 +24,16 @@ file locations when it can answer in one hop.
   falls back to a process restart on older binaries. A client's panel-side
   traffic reset also calls `POST /secrets/{name}/reset-quota` so a renewed client
   is not re-blocked by the sidecar's quota counter.
-- Storage: SQLite by default (`/etc/x-ui/x-ui.db` on Linux; the executable dir on
-  Windows), PostgreSQL optional (`XUI_DB_TYPE` / `XUI_DB_DSN`). The CGo SQLite
+- Storage: SQLite by default (`/etc/nikan-developer/nikan-developer.db` on Linux; the executable dir on
+  Windows), PostgreSQL optional (`NikanDeveloper_DB_TYPE` / `NikanDeveloper_DB_DSN`). The CGo SQLite
   driver (`mattn/go-sqlite3`) needs a C compiler — `CGO_ENABLED=0` builds fail.
 - Frontend: React 19 + Ant Design 6 + Vite 8 + TypeScript in `frontend/`,
   built into `internal/web/dist/` (gitignored) and embedded via `embed.FS`.
 
 ## Repo map
-- `main.go` — entry point + `x-ui` CLI (run, migrate, migrate-db, setting, cert).
-- `internal/config/` — env parsing (XUI_DEBUG, XUI_LOG_LEVEL, XUI_LOG_FOLDER,
-  XUI_BIN_FOLDER, XUI_SKIP_HSTS, XUI_PORT, XUI_DB_*).
+- `main.go` — entry point + `nikan-developer` CLI (run, migrate, migrate-db, setting, cert).
+- `internal/config/` — env parsing (NikanDeveloper_DEBUG, NikanDeveloper_LOG_LEVEL, NikanDeveloper_LOG_FOLDER,
+  NikanDeveloper_BIN_FOLDER, NikanDeveloper_SKIP_HSTS, NikanDeveloper_PORT, NikanDeveloper_DB_*).
 - `internal/database/` + `internal/database/model/` — GORM schema (~24 models;
   Inbound, Client, Setting, User are the core), inbound Protocol enum,
   AutoMigrate + hand-written migrations in `db.go`.
@@ -108,7 +108,7 @@ file locations when it can answer in one hop.
 - Stdlib `testing` only (no testify). Table-driven, `t.Run` subtests,
   `t.Helper()` on helpers. Assert the exact value / typed error / emitted
   string, never just `err != nil`. Prefer real deps over mocks: throwaway DB via
-  `database.InitDB(filepath.Join(t.TempDir(), "x-ui.db"))` +
+  `database.InitDB(filepath.Join(t.TempDir(), "nikan-developer.db"))` +
   `t.Cleanup(func() { _ = database.CloseDB() })`; `httptest` for HTTP.
   `internal/sub`'s `initSubDB(t)` is the template.
 - A test must fail without its fix. Write it, revert the fix, watch it go red,
@@ -118,8 +118,8 @@ file locations when it can answer in one hop.
   pure map lookup, or inputs the function can never receive. One real test that
   drives the bug through the actual code path beats five that restate the code.
 - Code must pass `golangci-lint run` (gofumpt + goimports formatting): `make lint`.
-- Postgres, xray-gRPC-e2e and scale tests `t.Skip` unless `XUI_TEST_PG_DSN`,
-  `XUI_DB_TYPE`+`XUI_DB_DSN`, `XRAY_E2E_BINARY` or `XUI_SCALE_TEST` is set — a
+- Postgres, xray-gRPC-e2e and scale tests `t.Skip` unless `NikanDeveloper_TEST_PG_DSN`,
+  `NikanDeveloper_DB_TYPE`+`NikanDeveloper_DB_DSN`, `XRAY_E2E_BINARY` or `NikanDeveloper_SCALE_TEST` is set — a
   green `go test ./...` does not mean those paths ran.
 
 ## Frontend conventions (summary; full version in frontend/CLAUDE.md)
@@ -132,7 +132,7 @@ file locations when it can answer in one hop.
   a headless-Chromium Storybook project, so run
   `npx playwright install --with-deps chromium` once or `make verify` fails.
 - Editing `frontend/src` does NOT change what users see until the Vite build is
-  regenerated into `internal/web/dist/`. In `XUI_DEBUG=true`, HTML is served from
+  regenerated into `internal/web/dist/`. In `NikanDeveloper_DEBUG=true`, HTML is served from
   the frozen embedded FS but JS/CSS off disk — after `npm run build` you MUST
   restart `go run .` or you get a blank page with 404s.
 - After touching share-link logic (`src/lib/xray/`), run `npm run test` (golden

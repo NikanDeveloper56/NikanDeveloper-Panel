@@ -2,23 +2,23 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./media/3x-ui-dark.png">
-    <img alt="3x-ui" src="./media/3x-ui-light.png">
+    <source media="(prefers-color-scheme: dark)" srcset="./media/Nikan.Developer-dark.png">
+    <img alt="Nikan.Developer" src="./media/Nikan.Developer-light.png">
   </picture>
 </p>
 
 <p align="center">
-  <a href="https://github.com/MHSanaei/3x-ui/releases"><img src="https://img.shields.io/github/v/release/mhsanaei/3x-ui" alt="Release"></a>
-  <a href="https://github.com/MHSanaei/3x-ui/actions"><img src="https://img.shields.io/github/actions/workflow/status/mhsanaei/3x-ui/release.yml.svg" alt="Build"></a>
-  <a href="#"><img src="https://img.shields.io/github/go-mod/go-version/mhsanaei/3x-ui.svg" alt="GO Version"></a>
-  <a href="https://github.com/MHSanaei/3x-ui/releases/latest"><img src="https://img.shields.io/github/downloads/mhsanaei/3x-ui/total.svg" alt="Downloads"></a>
+  <a href="https://github.com/NikanDeveloper56/Nikan.Developer/releases"><img src="https://img.shields.io/github/v/release/nikandeveloper56/Nikan.Developer" alt="Release"></a>
+  <a href="https://github.com/NikanDeveloper56/Nikan.Developer/actions"><img src="https://img.shields.io/github/actions/workflow/status/nikandeveloper56/Nikan.Developer/release.yml.svg" alt="Build"></a>
+  <a href="#"><img src="https://img.shields.io/github/go-mod/go-version/nikandeveloper56/Nikan.Developer.svg" alt="GO Version"></a>
+  <a href="https://github.com/NikanDeveloper56/Nikan.Developer/releases/latest"><img src="https://img.shields.io/github/downloads/nikandeveloper56/Nikan.Developer/total.svg" alt="Downloads"></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL%20V3-blue.svg?longCache=true" alt="License"></a>
-  <a href="https://pkg.go.dev/github.com/mhsanaei/3x-ui/v3"><img src="https://pkg.go.dev/badge/github.com/mhsanaei/3x-ui/v3.svg" alt="Go Reference"></a>
+  <a href="https://pkg.go.dev/github.com/nikandeveloper56/Nikan.Developer/v3"><img src="https://pkg.go.dev/badge/github.com/nikandeveloper56/Nikan.Developer/v3.svg" alt="Go Reference"></a>
 </p>
 
-**3X-UI** es un panel de control web avanzado y de código abierto para gestionar servidores [Xray-core](https://github.com/XTLS/Xray-core). Ofrece una interfaz limpia y multilingüe para desplegar, configurar y monitorear una amplia gama de protocolos de proxy y VPN — desde un único VPS hasta despliegues multinodo.
+**Nikan.Developer** es un panel de control web avanzado y de código abierto para gestionar servidores [Xray-core](https://github.com/XTLS/Xray-core). Ofrece una interfaz limpia y multilingüe para desplegar, configurar y monitorear una amplia gama de protocolos de proxy y VPN — desde un único VPS hasta despliegues multinodo.
 
-Construido como un fork mejorado del proyecto X-UI original, 3X-UI añade un soporte de protocolos más amplio, mayor estabilidad, contabilidad de tráfico por cliente y muchas funciones que mejoran la experiencia de uso.
+Construido como un fork mejorado del proyecto Nikan.Developer original, Nikan.Developer añade un soporte de protocolos más amplio, mayor estabilidad, contabilidad de tráfico por cliente y muchas funciones que mejoran la experiencia de uso.
 
 > [!IMPORTANT]
 > Este proyecto está destinado únicamente al uso personal. Por favor, no lo uses para fines ilegales ni en un entorno de producción.
@@ -69,31 +69,31 @@ Construido como un fork mejorado del proyecto X-UI original, 3X-UI añade un sop
 ## Inicio Rápido
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh)
 ```
 
 Para instalar una versión específica, añade su etiqueta (p. ej. `v3.4.0`):
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v3.4.0
+bash <(curl -Ls https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh) v3.4.0
 ```
 
 Para instalar la versión **dev** continua (la última prelanzamiento por commit desde `main`, no una versión estable), pasa `dev-latest`:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) dev-latest
+bash <(curl -Ls https://raw.githubusercontent.com/nikandeveloper56/Nikan.Developer/master/install.sh) dev-latest
 ```
 
-Durante la instalación se generan un nombre de usuario, una contraseña y una ruta de acceso aleatorios. Tras la instalación, ejecuta `x-ui` para abrir el menú de gestión, donde puedes iniciar/detener el servicio, ver o restablecer tus credenciales de acceso, gestionar certificados SSL y mucho más.
+Durante la instalación se generan un nombre de usuario, una contraseña y una ruta de acceso aleatorios. Tras la instalación, ejecuta `nikan-developer` para abrir el menú de gestión, donde puedes iniciar/detener el servicio, ver o restablecer tus credenciales de acceso, gestionar certificados SSL y mucho más.
 
-Para la documentación completa, visita la [Wiki del proyecto](https://github.com/MHSanaei/3x-ui/wiki).
+Para la documentación completa, visita la [Wiki del proyecto](https://github.com/NikanDeveloper56/Nikan.Developer/wiki).
 
 ### Instalación desatendida
 
 El instalador también se ejecuta de forma **no interactiva** para cloud-init.
-Define `XUI_NONINTERACTIVE=1` (o canalízalo sin TTY) y realizará la instalación de principio a fin sin
+Define `NikanDeveloper_NONINTERACTIVE=1` (o canalízalo sin TTY) y realizará la instalación de principio a fin sin
 ninguna pregunta, generando credenciales aleatorias y escribiéndolas en
-`/etc/x-ui/install-result.env`. Consulta [`deploy/`](deploy/) para:
+`/etc/nikan-developer/install-result.env`. Consulta [`deploy/`](deploy/) para:
 
 - [User-data de cloud-init](deploy/cloud-init/) — instalación desatendida en cualquier nube (Hetzner/AWS/DO/Vultr/GCP/Azure/Oracle)
 - [Notas de Hetzner Cloud](deploy/marketplace/hetzner/) — despliegue basado en cloud-init en Hetzner
@@ -106,31 +106,31 @@ ninguna pregunta, generando credenciales aleatorias y escribiéndolas en
 
 ## Opciones de Base de Datos
 
-3X-UI admite dos backends, que se eligen durante la instalación:
+Nikan.Developer admite dos backends, que se eligen durante la instalación:
 
-- **SQLite** (predeterminado) — un único archivo en `/etc/x-ui/x-ui.db`. Sin configuración, ideal para despliegues pequeños y medianos.
+- **SQLite** (predeterminado) — un único archivo en `/etc/nikan-developer/nikan-developer.db`. Sin configuración, ideal para despliegues pequeños y medianos.
 - **PostgreSQL** — recomendado para un gran número de clientes o configuraciones multinodo. El instalador puede instalar PostgreSQL localmente por ti, o aceptar un DSN a un servidor existente.
 
-En tiempo de ejecución, el backend se selecciona mediante variables de entorno (el instalador las escribe por ti en `/etc/default/x-ui`):
+En tiempo de ejecución, el backend se selecciona mediante variables de entorno (el instalador las escribe por ti en `/etc/default/nikan-developer`):
 
 ```
-XUI_DB_TYPE=postgres
-XUI_DB_DSN=postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable
+NikanDeveloper_DB_TYPE=postgres
+NikanDeveloper_DB_DSN=postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable
 ```
 
 ### Migrar una instalación de SQLite existente a PostgreSQL
 
 ```bash
-x-ui migrate-db --dsn "postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable"
-# luego define XUI_DB_TYPE y XUI_DB_DSN en /etc/default/x-ui y reinicia:
-systemctl restart x-ui
+nikan-developer migrate-db --dsn "postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable"
+# luego define NikanDeveloper_DB_TYPE y NikanDeveloper_DB_DSN en /etc/default/nikan-developer y reinicia:
+systemctl restart nikan-developer
 ```
 
 El archivo SQLite de origen permanece intacto; elimínalo manualmente una vez que hayas verificado el nuevo backend.
 
 ### Docker
 
-El comando predeterminado `docker compose up -d` sigue usando SQLite. Para ejecutarlo con el servicio PostgreSQL incluido, descomenta las dos líneas de variables de entorno `XUI_DB_*` en `docker-compose.yml` e inícialo con el perfil:
+El comando predeterminado `docker compose up -d` sigue usando SQLite. Para ejecutarlo con el servicio PostgreSQL incluido, descomenta las dos líneas de variables de entorno `NikanDeveloper_DB_*` en `docker-compose.yml` e inícialo con el perfil:
 
 ```bash
 docker compose --profile postgres up -d
@@ -139,29 +139,29 @@ docker compose --profile postgres up -d
 La imagen incluye Fail2ban (habilitado de forma predeterminada) para aplicar **límites de IP** por cliente. Fail2ban banea a los infractores con `iptables`, lo que requiere la capacidad `NET_ADMIN`. `docker-compose.yml` ya la concede mediante `cap_add`; si en su lugar inicias el contenedor con `docker run`, añade tú mismo las capacidades, de lo contrario los baneos se registran pero nunca se aplican:
 
 ```bash
-docker run -d --cap-add=NET_ADMIN --cap-add=NET_RAW ... ghcr.io/mhsanaei/3x-ui
+docker run -d --cap-add=NET_ADMIN --cap-add=NET_RAW ... ghcr.io/nikandeveloper56/Nikan.Developer
 ```
 
 ## Variables de Entorno
 
 | Variable | Descripción | Predeterminado |
 | --- | --- | --- |
-| `XUI_DB_TYPE` | Backend de base de datos: `sqlite` o `postgres` | `sqlite` |
-| `XUI_DB_DSN` | Cadena de conexión de PostgreSQL (cuando `XUI_DB_TYPE=postgres`) | — |
-| `XUI_DB_FOLDER` | Directorio del archivo de base de datos SQLite | `/etc/x-ui` |
-| `XUI_DB_MAX_OPEN_CONNS` | Máximo de conexiones abiertas (pool de PostgreSQL) | — |
-| `XUI_DB_MAX_IDLE_CONNS` | Máximo de conexiones inactivas (pool de PostgreSQL) | — |
-| `XUI_INIT_WEB_BASE_PATH` | La ruta URI inicial para el panel web | `/` |
-| `XUI_ENABLE_FAIL2BAN` | Habilitar la aplicación de límites de IP basada en Fail2ban | `true` |
-| `XUI_LOG_LEVEL` | Nivel de registro (`debug`, `info`, `warning`, `error`) | `info` |
-| `XUI_DEBUG` | Habilitar el modo de depuración | `false` |
-| `XUI_TUNNEL_HEALTH_MONITOR` | Habilitar el monitor de salud del túnel (sondea una URL y reinicia xray tras fallos repetidos; un reinicio desconecta a todos los clientes) | `false` |
-| `XUI_TUNNEL_HEALTH_PROXY` | Proxy a través del cual se envía el sondeo; apúntalo a una entrada local de xray para que el sondeo pruebe el túnel (p. ej. `socks5://127.0.0.1:1080`). Vacío significa que el sondeo solo comprueba la conectividad del host | — |
-| `XUI_TUNNEL_HEALTH_URL` | URL sondeada para verificar la salud del túnel | `https://www.cloudflare.com/cdn-cgi/trace` |
-| `XUI_TUNNEL_HEALTH_INTERVAL` | Intervalo entre sondeos | `30s` |
-| `XUI_TUNNEL_HEALTH_TIMEOUT` | Tiempo de espera por sondeo | `10s` |
-| `XUI_TUNNEL_HEALTH_FAILURES` | Fallos consecutivos antes de que se active un reinicio | `3` |
-| `XUI_TUNNEL_HEALTH_COOLDOWN` | Retardo mínimo entre reinicios consecutivos | `5m` |
+| `NikanDeveloper_DB_TYPE` | Backend de base de datos: `sqlite` o `postgres` | `sqlite` |
+| `NikanDeveloper_DB_DSN` | Cadena de conexión de PostgreSQL (cuando `NikanDeveloper_DB_TYPE=postgres`) | — |
+| `NikanDeveloper_DB_FOLDER` | Directorio del archivo de base de datos SQLite | `/etc/nikan-developer` |
+| `NikanDeveloper_DB_MAX_OPEN_CONNS` | Máximo de conexiones abiertas (pool de PostgreSQL) | — |
+| `NikanDeveloper_DB_MAX_IDLE_CONNS` | Máximo de conexiones inactivas (pool de PostgreSQL) | — |
+| `NikanDeveloper_INIT_WEB_BASE_PATH` | La ruta URI inicial para el panel web | `/` |
+| `NikanDeveloper_ENABLE_FAIL2BAN` | Habilitar la aplicación de límites de IP basada en Fail2ban | `true` |
+| `NikanDeveloper_LOG_LEVEL` | Nivel de registro (`debug`, `info`, `warning`, `error`) | `info` |
+| `NikanDeveloper_DEBUG` | Habilitar el modo de depuración | `false` |
+| `NikanDeveloper_TUNNEL_HEALTH_MONITOR` | Habilitar el monitor de salud del túnel (sondea una URL y reinicia xray tras fallos repetidos; un reinicio desconecta a todos los clientes) | `false` |
+| `NikanDeveloper_TUNNEL_HEALTH_PROXY` | Proxy a través del cual se envía el sondeo; apúntalo a una entrada local de xray para que el sondeo pruebe el túnel (p. ej. `socks5://127.0.0.1:1080`). Vacío significa que el sondeo solo comprueba la conectividad del host | — |
+| `NikanDeveloper_TUNNEL_HEALTH_URL` | URL sondeada para verificar la salud del túnel | `https://www.cloudflare.com/cdn-cgi/trace` |
+| `NikanDeveloper_TUNNEL_HEALTH_INTERVAL` | Intervalo entre sondeos | `30s` |
+| `NikanDeveloper_TUNNEL_HEALTH_TIMEOUT` | Tiempo de espera por sondeo | `10s` |
+| `NikanDeveloper_TUNNEL_HEALTH_FAILURES` | Fallos consecutivos antes de que se active un reinicio | `3` |
+| `NikanDeveloper_TUNNEL_HEALTH_COOLDOWN` | Retardo mínimo entre reinicios consecutivos | `5m` |
 
 ## Idiomas Compatibles
 
@@ -184,15 +184,15 @@ Las contribuciones son bienvenidas. Por favor, lee la [Guía de contribución](/
 
 ## Herramientas de la Comunidad
 
-Herramientas e integraciones construidas por la comunidad alrededor de 3x-ui.
+Herramientas e integraciones construidas por la comunidad alrededor de Nikan.Developer.
 
-- [terraform-provider-3x-ui](https://github.com/batonogov/terraform-provider-threexui) (Licencia: **MIT**): _Gestiona inbounds, clientes, configuración del panel y configuración de Xray como código con Terraform / OpenTofu._
+- [terraform-provider-Nikan.Developer](https://github.com/batonogov/terraform-provider-threexui) (Licencia: **MIT**): _Gestiona inbounds, clientes, configuración del panel y configuración de Xray como código con Terraform / OpenTofu._
 
 ## Apoyar el Proyecto
 
 **Si este proyecto te es útil, puedes darle una**:star2:
 
-<a href="https://www.buymeacoffee.com/MHSanaei" target="_blank">
+<a href="https://www.buymeacoffee.com/NikanDeveloper56" target="_blank">
 <img src="./media/default-yellow.png" alt="Buy Me A Coffee" style="height: 70px !important;width: 277px !important;" >
 </a>
 
@@ -203,4 +203,4 @@ Herramientas e integraciones construidas por la comunidad alrededor de 3x-ui.
 
 ## Estrellas a lo Largo del Tiempo
 
-[![Stargazers over time](https://starchart.cc/MHSanaei/3x-ui.svg?variant=adaptive)](https://starchart.cc/MHSanaei/3x-ui)
+[![Stargazers over time](https://starchart.cc/NikanDeveloper56/Nikan.Developer.svg?variant=adaptive)](https://starchart.cc/NikanDeveloper56/Nikan.Developer)

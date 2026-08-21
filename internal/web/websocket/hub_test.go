@@ -9,11 +9,11 @@ import (
 
 	"github.com/op/go-logging"
 
-	xuilogger "github.com/mhsanaei/3x-ui/v3/internal/logger"
+	xuilogger "github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
 )
 
 func TestMain(m *testing.M) {
-	_ = os.Setenv("XUI_LOG_FOLDER", os.TempDir())
+	_ = os.Setenv("NikanDeveloper_LOG_FOLDER", os.TempDir())
 	xuilogger.InitLogger(logging.ERROR)
 	os.Exit(m.Run())
 }

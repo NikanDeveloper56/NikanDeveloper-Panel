@@ -3,7 +3,7 @@ package runtime
 import (
 	"context"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
 )
 
 type Runtime interface {

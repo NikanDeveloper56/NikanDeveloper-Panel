@@ -4,8 +4,8 @@ import (
 	"crypto/tls"
 	"strings"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/runtime"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/common"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/runtime"
 )
 
 // NodeMtlsCaCert returns the PEM of this panel's node-auth CA certificate (the
@@ -26,7 +26,7 @@ func (s *NodeService) NodeMtlsCaCert() (string, error) {
 
 // ReloadMasterMtlsClient validates the master credential currently stored by
 // the panel and drops cached mTLS connection pools. This makes an intentional
-// out-of-process credential rotation take effect without restarting x-ui (and
+// out-of-process credential rotation take effect without restarting nikan-developer (and
 // therefore without stopping the xray child process in the same service).
 func (s *NodeService) ReloadMasterMtlsClient() error {
 	stored, err := (&SettingService{}).LoadMasterClientCert()

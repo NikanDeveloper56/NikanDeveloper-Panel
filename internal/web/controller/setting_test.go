@@ -11,10 +11,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/crypto"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/crypto"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/service"
 )
 
 func TestValidateRegex(t *testing.T) {
@@ -54,8 +54,8 @@ func TestValidateRegex(t *testing.T) {
 }
 
 func TestAPITokenMutationRoutesEnforceExpectedScope(t *testing.T) {
-	t.Setenv("XUI_DB_FOLDER", t.TempDir())
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", t.TempDir())
+	if err := database.InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })
@@ -92,8 +92,8 @@ func TestAPITokenMutationRoutesEnforceExpectedScope(t *testing.T) {
 // GHSA-xqqw-jqqv-99h6: a save that keeps 2FA enabled must not be able to
 // rebind the authenticator without presenting a current code.
 func TestUpdateSettingRequiresCodeToReplaceTwoFactorToken(t *testing.T) {
-	t.Setenv("XUI_DB_FOLDER", t.TempDir())
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", t.TempDir())
+	if err := database.InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })

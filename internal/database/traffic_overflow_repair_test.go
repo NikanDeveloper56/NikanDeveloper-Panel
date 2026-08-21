@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray"
 )
 
 // TestRepairOverflowedTrafficCounters_HealsSQLiteRealPromotion reproduces
@@ -14,8 +14,8 @@ import (
 // cell back to a scannable integer clamped to TrafficMax.
 func TestRepairOverflowedTrafficCounters_HealsSQLiteRealPromotion(t *testing.T) {
 	dbDir := t.TempDir()
-	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", dbDir)
+	if err := InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB failed: %v", err)
 	}
 	t.Cleanup(func() { _ = CloseDB() })
@@ -74,8 +74,8 @@ func TestRepairOverflowedTrafficCounters_HealsSQLiteRealPromotion(t *testing.T) 
 // overflowing int64 (which SQLite would promote to REAL).
 func TestClampedAddExpr_CapsAtTrafficMax(t *testing.T) {
 	dbDir := t.TempDir()
-	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	t.Setenv("NikanDeveloper_DB_FOLDER", dbDir)
+	if err := InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB failed: %v", err)
 	}
 	t.Cleanup(func() { _ = CloseDB() })

@@ -12,11 +12,11 @@ import (
 func TestServePWAAssets(t *testing.T) {
 	oldDistFS := distFS
 	distFS = fstest.MapFS{
-		"dist/manifest.webmanifest": &fstest.MapFile{Data: []byte(`{"name":"3x-ui"}`)},
+		"dist/manifest.webmanifest": &fstest.MapFile{Data: []byte(`{"name":"Nikan.Developer"}`)},
 		"dist/pwa-register.js":      &fstest.MapFile{Data: []byte("register")},
 		"dist/service-worker.js":    &fstest.MapFile{Data: []byte("worker")},
-		"dist/icons/3x-ui-192.png":  &fstest.MapFile{Data: []byte("icon-192")},
-		"dist/icons/3x-ui-512.png":  &fstest.MapFile{Data: []byte("icon-512")},
+		"dist/icons/Nikan.Developer-192.png":  &fstest.MapFile{Data: []byte("icon-192")},
+		"dist/icons/Nikan.Developer-512.png":  &fstest.MapFile{Data: []byte("icon-512")},
 	}
 	t.Cleanup(func() { distFS = oldDistFS })
 
@@ -26,7 +26,7 @@ func TestServePWAAssets(t *testing.T) {
 		contentType string
 		body        string
 	}{
-		{name: "manifest", handler: ServePWAManifest, contentType: "application/manifest+json; charset=utf-8", body: `{"name":"3x-ui"}`},
+		{name: "manifest", handler: ServePWAManifest, contentType: "application/manifest+json; charset=utf-8", body: `{"name":"Nikan.Developer"}`},
 		{name: "registration", handler: ServePWARegister, contentType: "application/javascript; charset=utf-8", body: "register"},
 		{name: "worker", handler: ServePWAServiceWorker, contentType: "application/javascript; charset=utf-8", body: "worker"},
 	}
@@ -57,14 +57,14 @@ func TestServePWAAssets(t *testing.T) {
 func TestServePWAIconServesPNG(t *testing.T) {
 	oldDistFS := distFS
 	distFS = fstest.MapFS{
-		"dist/icons/3x-ui-192.png": &fstest.MapFile{Data: []byte("icon-192")},
+		"dist/icons/Nikan.Developer-192.png": &fstest.MapFile{Data: []byte("icon-192")},
 	}
 	t.Cleanup(func() { distFS = oldDistFS })
 
 	gin.SetMode(gin.TestMode)
 	response := httptest.NewRecorder()
 	context, _ := gin.CreateTestContext(response)
-	context.Params = gin.Params{{Key: "name", Value: "3x-ui-192.png"}}
+	context.Params = gin.Params{{Key: "name", Value: "Nikan.Developer-192.png"}}
 	ServePWAIcon(context)
 
 	if response.Code != 200 {

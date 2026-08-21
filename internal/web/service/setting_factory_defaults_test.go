@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/util/reflect_util"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/entity"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/util/reflect_util"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/web/entity"
 )
 
 func allSettingJSONTags(t *testing.T) map[string]bool {

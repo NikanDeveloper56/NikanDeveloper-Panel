@@ -6,8 +6,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/config"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray/geodata"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/config"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/xray/geodata"
 )
 
 // GeodataTokenIssue reports a routing token the running core would reject,
@@ -28,7 +28,7 @@ const (
 )
 
 // geodataStores keys the cache by asset directory rather than holding a single
-// store, so a changed XUI_BIN_FOLDER is picked up instead of being pinned to
+// store, so a changed NikanDeveloper_BIN_FOLDER is picked up instead of being pinned to
 // whatever the first call saw.
 var geodataStores sync.Map
 

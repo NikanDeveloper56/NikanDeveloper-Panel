@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	"github.com/mhsanaei/3x-ui/v3/internal/eventbus"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/eventbus"
 )
 
 // probe is one observatory sample: whether the outbound is alive and the
@@ -61,7 +61,7 @@ func runObservatory(t *testing.T, threshold int, seq []probe) []eventbus.EventTy
 }
 
 func TestApplyObservatoryDebounce(t *testing.T) {
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
+	if err := database.InitDB(filepath.Join(t.TempDir(), "nikan-developer.db")); err != nil {
 		t.Fatalf("init db: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })
@@ -150,7 +150,7 @@ func TestValidObsTag(t *testing.T) {
 
 func TestApplyObservatoryKeepsUnicodeTags(t *testing.T) {
 	dbDir := t.TempDir()
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
+	if err := database.InitDB(filepath.Join(dbDir, "nikan-developer.db")); err != nil {
 		t.Fatalf("InitDB: %v", err)
 	}
 	t.Cleanup(func() { _ = database.CloseDB() })

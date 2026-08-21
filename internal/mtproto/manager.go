@@ -18,8 +18,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/database/model"
+	"github.com/nikandeveloper56/Nikan.Developer/v3/internal/logger"
 )
 
 // SecretEntry is one named FakeTLS secret served by an mtg-multi process. Name is
@@ -144,7 +144,7 @@ type Manager struct {
 	mu    sync.Mutex
 	procs map[int]*managed
 	// swept records that the one-time startup cleanup of orphaned mtg
-	// processes (survivors of a previous x-ui run) has already run.
+	// processes (survivors of a previous nikan-developer run) has already run.
 	swept bool
 }
 
@@ -255,9 +255,9 @@ func (m *Manager) Ensure(inst Instance) error {
 	return m.ensureLocked(inst)
 }
 
-// sweepOrphansLocked kills mtg processes left running by a previous x-ui run,
+// sweepOrphansLocked kills mtg processes left running by a previous nikan-developer run,
 // exactly once per process lifetime and before any of our own mtg are started.
-// Because x-ui owns every mtg process, anything alive at this point is an orphan
+// Because nikan-developer owns every mtg process, anything alive at this point is an orphan
 // that would otherwise keep holding an inbound port with a stale secret.
 func (m *Manager) sweepOrphansLocked() {
 	if m.swept {

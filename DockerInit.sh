@@ -25,7 +25,7 @@ case $1 in
         FNAME="amd64"
         ;;
 esac
-MTG_MULTI_VER=$(curl -sfL "https://api.github.com/repos/mhsanaei/mtg-multi/releases/latest" | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p' | head -n 1)
+MTG_MULTI_VER=$(curl -sfL "https://api.github.com/repos/nikandeveloper56/mtg-multi/releases/latest" | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p' | head -n 1)
 if [ -z "$MTG_MULTI_VER" ]; then
     echo "DockerInit: could not resolve the latest mtg-multi release tag" >&2
     exit 1
@@ -44,7 +44,7 @@ case $FNAME in
     *) MTGARCH="$FNAME" ;;
 esac
 MTG_PKG="mtg-multi-${MTG_MULTI_VER#v}-linux-${MTGARCH}"
-curl -sfLRO "https://github.com/mhsanaei/mtg-multi/releases/download/${MTG_MULTI_VER}/${MTG_PKG}.tar.gz"
+curl -sfLRO "https://github.com/nikandeveloper56/mtg-multi/releases/download/${MTG_MULTI_VER}/${MTG_PKG}.tar.gz"
 tar -xzf "${MTG_PKG}.tar.gz"
 mv "${MTG_PKG}/mtg-multi" "mtg-linux-${FNAME}"
 rm -rf "${MTG_PKG}" "${MTG_PKG}.tar.gz"

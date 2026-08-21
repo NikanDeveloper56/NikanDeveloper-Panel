@@ -8,14 +8,14 @@
       "args": [
         "build",
         "-o",
-        "bin/3x-ui",
+        "bin/Nikan.Developer",
         "./main.go"
       ],
       "windows": {
         "args": [
           "build",
           "-o",
-          "bin/3x-ui.exe",
+          "bin/Nikan.Developer.exe",
           "./main.go"
         ]
       },
@@ -41,7 +41,7 @@
       "options": {
         "cwd": "${workspaceFolder}",
         "env": {
-          "XUI_DEBUG": "true"
+          "NikanDeveloper_DEBUG": "true"
         }
       },
       "problemMatcher": [
