@@ -57,7 +57,7 @@ ENV XUI_DB_TYPE=""
 ENV XUI_DB_DSN=""
 ENV XUI_PORT="8080"
 
-RUN mkdir -p /app/data
+RUN mkdir -p /app/data /app/bin
 
 EXPOSE 8080
 CMD ["./nikan-developer"]

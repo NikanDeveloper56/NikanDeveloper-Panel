@@ -10,4 +10,8 @@ restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 
 [[env]]
-XUI_PORT = "{{ PORT }}"
+NikanDeveloper_PORT = "{{ PORT }}"
+NikanDeveloper_BIN_FOLDER = "/app/bin"
+NikanDeveloper_DB_FOLDER = "/app/data"
+NikanDeveloper_MAIN_FOLDER = "/app/data"
+NikanDeveloper_ENABLE_FAIL2BAN = "false"
